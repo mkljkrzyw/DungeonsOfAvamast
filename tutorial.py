@@ -11,6 +11,7 @@ Commands:
     use [item]
     inventory 
     stats
+    info
     help
 ''')
 
@@ -18,6 +19,8 @@ Commands:
 
 def tutorial(player):
     currentRoom = "Sypialnia"
+    directions=["north", "south", "east", "west"]
+    avaiable_directions = []
     rooms = {
     "Sypialnia": {
         "description": "Jesteś w swojej sypialni. Widzisz łóżko, skrzynię, drzwi prowadzące na korytarz oraz kartkę zawieszoną na ścianie.",
@@ -31,16 +34,23 @@ def tutorial(player):
         "north": "dziedziniec"
     },
     "dziedziniec": {
-        "description": "Jesteś na dziedzińcu. Widzisz fontannę, ławkę oraz drzwi prowadzące do korytarza.",
+        "description": "Jesteś na dziedzińcu. Widzisz fontannę, ławkę oraz drzwi prowadzące do korytarza... \n \n Nagle atakuje cię Rapax. Jego ostre szpony przebijają twoją skórę, a jego pazury tną głęboko. Zanim zdążysz zareagować czujesz nagły ból, a potem wszystko staje się białe.",
         "south": "Korytarz"
     }
     }
     
-    print("Budzisz się w swoim pokoju, w dobrze znanej twierdzy Ezelthorn. Coś jednak wydaje się nie tak. Wszystko jest ciche, a ty nie pamiętasz, co się stało. Musisz znaleźć sposób, by wydostać się z tej sytuacji.")
+    os.system("cls")
     help()
+    print("Budzisz się w swoim pokoju, w dobrze znanej twierdzy Ezelthorn. Coś jednak wydaje się nie tak. Wszystko jest ciche, a ty nie pamiętasz, co się stało. Musisz znaleźć sposób, by wydostać się z tej sytuacji.")
     while True:
+        avaiable_directions = []
+        for i in rooms[currentRoom]:
+            if i in directions:
+                avaiable_directions.append(i)
         print("\n" + rooms[currentRoom]["description"])
+        print(f"\nDostępne kierunki: {', '.join(avaiable_directions)}")
         turn = input("> ")
+        
         os.system("cls")
         turn = turn.split(" ",1)
         if turn[0]=="use":
@@ -58,8 +68,6 @@ def tutorial(player):
         elif turn[0]=="go":
             if turn[1] in rooms[currentRoom]:
                 currentRoom = rooms[currentRoom][turn[1]]
-                if currentRoom == "dziedziniec":
-                    print("Nagle atakuje cię Rapax. Jego ostre szpony przebijają twoją skórę, a jego pazury tną głęboko. Zanim zdążysz zareagować czujesz nagły ból, a potem wszystko staje się białe.")
             else:
                 print("Nie możesz iść w tym kierunku.")
         elif turn[0]=="inventory":
@@ -68,3 +76,9 @@ def tutorial(player):
             player.show_stats()
         elif turn[0]=="help":
             help()
+        elif turn[0]=="info":
+            print("Aktualna lokalizacja: " + currentRoom)
+            print(rooms[currentRoom]["description"])
+
+        else:
+            print("Nieznana komenda. Wpisz 'help' aby uzyskać listę dostępnych komend.")
