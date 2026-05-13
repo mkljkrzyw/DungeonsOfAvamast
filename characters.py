@@ -11,7 +11,7 @@ class Player:
         self.dexterity = dexterity
         self.intelligence = intelligence
         self.blessing = blessing
-        self.inventory = []
+        self.inventory = ["bestiariusz"]
         self.weapon = fists()
         self.energy = 10
         self.max_energy = 10

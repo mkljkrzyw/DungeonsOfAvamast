@@ -2,6 +2,7 @@ from characters import Player
 from kreator import zapytaj_tak_nie, utworz_postac, wyczysc_ekran
 from tutorial import tutorial
 from ui import wypisz
+from main import main
 
 
 def uruchom_gre():
@@ -19,7 +20,7 @@ def uruchom_gre():
              wypisz("Proszę wpisać 'tak' lub 'nie'.")
         if odpowiedz == "tak":
             wypisz("Pominięto samouczek. Powodzenia w Dungeons of Avamast!")
-            return
+            main()
         elif odpowiedz == "nie":
             wyczysc_ekran()
             tutorial(player)

@@ -1,7 +1,10 @@
 import re
 import sys
+import os
 import time
 import colorama
+
+from DungeonsOfAvamast.monsters import rapax
 
 try:
     import msvcrt
@@ -18,6 +21,7 @@ COLORS = {
     "BLUE": "\033[94m",
     "PURPLE": "\033[95m",
     "CYAN": "\033[96m",
+    "LIGHT_GREEN": "\033[92m",
     "RESET": "\033[0m",
 }
 
@@ -29,6 +33,7 @@ STYL = {
 
 YELLOW = COLORS["YELLOW"]
 GREEN = COLORS["GREEN"]
+LIGHT_GREEN = COLORS["LIGHT_GREEN"]
 CYAN = COLORS["CYAN"]
 RESET = COLORS["RESET"]
 
@@ -194,7 +199,20 @@ def wypisz(
 
     sys.stdout.write(kod_reset + "\n")
     sys.stdout.flush()
-
+def bestiariusz():
+    os.system("cls")
+    wypisz("O czym chcesz przeczytać? \n1. Rapax \n 2. Powrót", slowo_kolor={"Rapax": "YELLOW"})
+    best=input("> ")
+    while best not in ["1", "2"]:
+        os.system("cls")
+        wypisz("O czym chcesz przeczytać? \n1. Rapax \n 2. Powrót", slowo_kolor={"Rapax": "YELLOW"})
+        best=input("> ")
+        if best == "1":
+            wypisz(rapax().visual, slowo_kolor={rapax().visual: "YELLOW"})
+            wypisz(rapax().behavior, slowo_kolor={rapax().behavior: "YELLOW"})
+            wypisz(rapax().clasification, slowo_kolor={rapax().clasification: "YELLOW"})
+        elif best == "2":
+            return
 def help():
     wypisz('''
 Dungeons of Avamast

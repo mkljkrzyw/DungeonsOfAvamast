@@ -1,8 +1,8 @@
 import os
-from ui import wypisz, help
+from ui import wypisz, help, bestiariusz
 from monsters import kukla_treningowa, rapax
 from fights import walka
-
+from main import main
 
 os.system("cls")
 
@@ -30,7 +30,6 @@ def tutorial(player):
         "south": "Korytarz"
     }
     }
-    player.hp=10
     os.system("cls")
     wypisz("Sterowanie w tej grze opiera się na wpisywaniu prostych komend tekstowych w terminalu. Podczas wypisywania tekstu, możesz kliknąć 'enter', żeby od razu wyświetlić cały tekst. W każdym pomieszczeniu możesz wykonywać różne akcje, takie jak poruszanie się, interakcja z przedmiotami czy sprawdzanie swojego ekwipunku. Oto podstawowe komendy, które będziesz używać podczas gry:", kolor="CYAN", styl="BOLD")
     help()
@@ -86,11 +85,17 @@ def tutorial(player):
                     wypisz("Teraz wiesz już jak walczyć! Pora przetestować twoje umiejętności")
                     wypisz("Nagle słyszysz ryk dochodzący z dziedzińca. To Rapax, potężna bestia (możesz dowiedzieć się o nim więcej w bestiariuszu). Rzuca się na Ciebie z ogromną siłą. Wiesz, że to już raczej twój koniec, ale próbujesz walczyć o swoje życie!")
                     walka(player, rapax())
+                    wypisz("Czujesz, że twoje siły słabną, a obrażenia są coraz większe. W końcu Rapax zadaje ci ostatni cios, a ty tracisz przytomność...")
+                    wypisz("Naciśnij Enter, aby kontynuować...")
+                    input()
+                    main()
                 elif argument in player.inventory:
                     if argument == "piwo":
                         wypisz("Pijesz piwo i czujesz się odświeżony.", slowo_kolor={"piwo": "YELLOW"})
                         player.health = player.max_health
                         player.inventory.remove(argument)
+                    elif argument == "bestiariusz":
+                        bestiariusz()
                     else:
                         wypisz(f"Używasz {argument} z ekwipunku, ale nic się nie dzieje.", slowo_kolor={argument: "YELLOW"})
             else:
