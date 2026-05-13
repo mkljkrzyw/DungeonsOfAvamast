@@ -32,13 +32,17 @@ def walka(player, przeciwnik):
                         player_damage = player.damage * 2
                         czy_crit=True
                     else:
-                        player_damage=random.randint(player.damage-3, player.damage+3)
+                        los=random.randint(player.damage-3, player.damage+3)
+                        if los < 0:
+                            player_damage = 0
+                        else:
+                            player_damage = los
                     if turapotwora=="obrona":
                         print(f"Atakujesz, ale {przeciwnik.name} broni się przed atakiem!")
                         player_damage=player_damage//2
                         turapotwora=""
                         if czy_crit==True:
-                            wypisz(f"Wykonujesz potężny atak, ale {przeciwnik.name} broni się przed atakiem! Otrzymuje tylko {player_damage} obrażeń!",opoznienie=0, slowo_kolor={f"{player_damage} obrażeń": "GREEN"})
+                            wypisz(f"Wykonujesz potężny atak, ale {przeciwnik.name} broni się przed atakiem! Otrzymuje tylko {player_damage} obrażeń! (KRYTYCZNY)",opoznienie=0, slowo_kolor={f"{player_damage} obrażeń": "YELLOW"})
                             czy_crit=False
                         else:
                             wypisz(f"Zadajesz tylko {player_damage} obrażeń!", opoznienie=0,slowo_kolor={f"{player_damage} obrażeń": "GREEN"})
@@ -46,7 +50,7 @@ def walka(player, przeciwnik):
                             
                     else:
                         if czy_crit==True:
-                            wypisz(f"Wykonujesz potężny atak. {przeciwnik.name} otrzymuje {player_damage} obrażeń!", opoznienie=0,slowo_kolor={f"{player_damage} obrażeń": "GREEN"})
+                            wypisz(f"Wykonujesz potężny atak. {przeciwnik.name} otrzymuje {player_damage} obrażeń!", opoznienie=0,slowo_kolor={f"{player_damage} obrażeń! (KRYTYCZNY)": "YELLOW"})
                             czy_crit=False
                         else:
                             wypisz(f"Zadajesz {player_damage} obrażeń!", opoznienie=0,slowo_kolor={f"{player_damage} obrażeń": "GREEN"})
@@ -118,7 +122,7 @@ def walka(player, przeciwnik):
                         enemy_damage=enemy_damage//2
                         turagracz=""
                         if czy_crit==True:
-                            wypisz(f"{przeciwnik.name} wykonuje potężny atak, ale Ty bronisz się przed atakiem! Otrzymujesz tylko {enemy_damage} obrażeń!",opoznienie=0, slowo_kolor={f"{enemy_damage} obrażeń": "RED"})
+                            wypisz(f"{przeciwnik.name} wykonuje potężny atak, ale Ty bronisz się przed atakiem! Otrzymujesz tylko {enemy_damage} obrażeń! (KRYTYCZNY)",opoznienie=0, slowo_kolor={f"{enemy_damage} obrażeń": "RED"})
                             czy_crit=False
                         else:
                             wypisz(f"{przeciwnik.name} zadaje Ci tylko {enemy_damage} obrażeń!", opoznienie=0,slowo_kolor={f"{enemy_damage} obrażeń": "RED"})
@@ -126,7 +130,7 @@ def walka(player, przeciwnik):
                             
                     else:
                         if czy_crit==True:
-                            wypisz(f"{przeciwnik.name} wykonuje potężny atak. Otrzymujesz {enemy_damage} obrażeń!", opoznienie=0,slowo_kolor={f"{enemy_damage} obrażeń": "RED"})
+                            wypisz(f"{przeciwnik.name} wykonuje potężny atak. Otrzymujesz {enemy_damage} obrażeń! (KRYTYCZNY)", opoznienie=0,slowo_kolor={f"{enemy_damage} obrażeń": "RED"})
                             czy_crit=False
                         else:
                             wypisz(f"{przeciwnik.name} zadaje Ci {enemy_damage} obrażeń!", opoznienie=0,slowo_kolor={f"{enemy_damage} obrażeń": "RED"})

@@ -16,11 +16,11 @@ class Player:
         self.energy = 10
         self.max_energy = 10
         if self.weapon.main_stat == "strength":
-            self.damage = self.weapon.damage*(self.strength//5)
+            self.damage = self.weapon.damage*(self.strength//3)
         elif self.weapon.main_stat == "dexterity":
-            self.damage = self.weapon.damage*(self.dexterity//5)
+            self.damage = self.weapon.damage*(self.dexterity//3)
         elif self.weapon.main_stat == "intelligence":
-            self.damage = self.weapon.damage*(self.intelligence//5)
+            self.damage = self.weapon.damage*(self.intelligence//3)
 
     def show_stats(self):
         print(f"\n--- STATYSTYKI: {self.name} ---")

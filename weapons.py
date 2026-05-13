@@ -1,4 +1,5 @@
 class fists:
-    name = "pięści"
-    main_stat = "strength"
-    damage = 1
+    def __init__(self):
+        self.name = "pięści"
+        self.main_stat = "strength"
+        self.damage = 2
