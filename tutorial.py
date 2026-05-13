@@ -1,6 +1,7 @@
 import os
 from ui import wypisz, help
-
+from monsters import kukla_treningowa, rapax
+from fights import walka
 
 
 os.system("cls")
@@ -23,11 +24,13 @@ def tutorial(player):
         "north": "dziedziniec"
     },
     "dziedziniec": {
-        "description": "Jesteś na dziedzińcu. Widzisz fontannę, ławkę oraz drzwi prowadzące do korytarza... \n \n Nagle atakuje cię Rapax. Jego ostre szpony przebijają twoją skórę, a jego pazury tną głęboko. Zanim zdążysz zareagować czujesz nagły ból, a potem wszystko staje się białe.",
+        "description": "Jesteś na dziedzińcu. Widzisz fontannę, ławkę, kukłę treningową oraz drzwi prowadzące do korytarza...",
+        #Nagle atakuje cię Rapax. Jego ostre szpony przebijają twoją skórę, a jego pazury tną głęboko. Zanim zdążysz zareagować czujesz nagły ból, a potem wszystko staje się białe.
+        "objects": ["lawka", "kukla treningowa"],
         "south": "Korytarz"
     }
     }
-    
+    player.hp=10
     os.system("cls")
     wypisz("Sterowanie w tej grze opiera się na wpisywaniu prostych komend tekstowych w terminalu. Podczas wypisywania tekstu, możesz kliknąć 'enter', żeby od razu wyświetlić cały tekst. W każdym pomieszczeniu możesz wykonywać różne akcje, takie jak poruszanie się, interakcja z przedmiotami czy sprawdzanie swojego ekwipunku. Oto podstawowe komendy, które będziesz używać podczas gry:", kolor="CYAN", styl="BOLD")
     help()
@@ -39,13 +42,13 @@ def tutorial(player):
     wypisz("Naciśnij Enter, aby kontynuować...")
     input()
     os.system("cls")
-    wypisz("Budzisz się w swoim pokoju, w dobrze znanej twierdzy Ezelthorn. Coś jednak wydaje się nie tak. Wszystko jest ciche, a ty nie pamiętasz, co się stało. Musisz znaleźć sposób, by wydostać się z tej sytuacji.")
+    wypisz("Budzisz się w swoim pokoju, w dobrze znanej twierdzy Ezelthorn. Coś jednak wydaje się nie tak. Wszystko jest ciche, a ty nie pamiętasz, co się stało. Musisz znaleźć sposób, by wydostać się z tej sytuacji. Czujesz że rozwiązanie zna kukła na dziedzińcu")
     while True:
         avaiable_directions = []
         for i in rooms[currentRoom]:
             if i in directions:
                 avaiable_directions.append(i)
-        wypisz(f"\n --- {currentRoom()} ---", styl="BOLD", kolor="GREEN")
+        wypisz(f"\n --- {currentRoom} ---", styl="BOLD", kolor="GREEN")
         wypisz(f"\n" + rooms[currentRoom]["description"])
         if "objects" in rooms[currentRoom]:
             wypisz(f"\nObiekty: {', '.join(rooms[currentRoom]['objects'])}", slowo_bold=rooms[currentRoom]["objects"], slowo_kolor={obj: "YELLOW" for obj in rooms[currentRoom]["objects"]})
@@ -69,6 +72,20 @@ def tutorial(player):
                 elif argument == "kartka":
                     wypisz("Czytasz kartkę, a na niej napisane jest - 'Aby uzyskać pomoc odnośnie komend, wpisz 'help''.", slowo_kolor={"help": "CYAN"})
                     rooms[currentRoom]["objects"].remove(argument)
+                elif argument=="lawka":
+                    wypisz("Siadasz na ławce, ale nic się nie dzieje. Może powinieneś poszukać czegoś innego do interakcji?")
+                elif argument=="kukla treningowa" or argument=="kukla":
+                    wypisz("Atakujesz kukłę treningową. Pora na pierwszą walkę!")
+                    wypisz("W trakcie walki będziesz miał do wyboru opcje ataku, użcia błogosławieństwa, użyć przedmiotu z ekwipunku, bronić się, unikać lub spróbować uciec. Wybierz swoją strategię mądrze, aby pokonać przeciwnika!", kolor="CYAN", styl="BOLD")
+                    wypisz("Wybranie ataku daje do wyboru różne ataki, które zadają obrażenia w zależności od twojej głównej cechy. Użycie błogosławieństwa pozwala na specjalne akcje, które mogą zmienić przebieg walki. Obrona zmniejsza obrażenia otrzymywane od przeciwnika, unikanie daje szansę na całkowite uniknięcie ataku, a ucieczka pozwala na zakończenie walki, ale może nie zawsze być skuteczna.")
+                    wypisz("Pamiętaj, że każda decyzja w walce ma swoje konsekwencje, więc wybieraj mądrze i dostosuj swoją strategię do sytuacji!")
+                    wypisz("Naciśnij Enter, aby rozpocząć walkę...")
+                    input()
+                    walka(player, kukla_treningowa())
+                    os.system("cls")
+                    wypisz("Teraz wiesz już jak walczyć! Pora przetestować twoje umiejętności")
+                    wypisz("Nagle słyszysz ryk dochodzący z dziedzińca. To Rapax, potężna bestia (możesz dowiedzieć się o nim więcej w bestiariuszu). Rzuca się na Ciebie z ogromną siłą. Wiesz, że to już raczej twój koniec, ale próbujesz walczyć o swoje życie!")
+                    walka(player, rapax())
                 elif argument in player.inventory:
                     if argument == "piwo":
                         wypisz("Pijesz piwo i czujesz się odświeżony.", slowo_kolor={"piwo": "YELLOW"})
