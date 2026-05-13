@@ -42,7 +42,7 @@ def tutorial(player):
     wypisz("Naciśnij Enter, aby kontynuować...")
     input()
     os.system("cls")
-    wypisz("Budzisz się w swoim pokoju, w dobrze znanej twierdzy Ezelthorn. Coś jednak wydaje się nie tak. Wszystko jest ciche, a ty nie pamiętasz, co się stało. Musisz znaleźć sposób, by wydostać się z tej sytuacji. Czujesz że rozwiązanie zna kukła na dziedzińcu")
+    wypisz("Siedzisz w swoim pokoju, w dobrze znanej twierdzy Ezelthorn. Coś jednak wydaje się nie tak. Wszystko jest ciche, a ty nie pamiętasz, co się stało. Musisz znaleźć sposób, by wydostać się z tej sytuacji. Czujesz że rozwiązanie zna kukła na dziedzińcu")
     while True:
         avaiable_directions = []
         for i in rooms[currentRoom]:
@@ -86,10 +86,10 @@ def tutorial(player):
                     wypisz("Teraz wiesz już jak walczyć! Pora przetestować twoje umiejętności")
                     wypisz("Nagle słyszysz ryk dochodzący z dziedzińca. To Rapax, potężna bestia (możesz dowiedzieć się o nim więcej w bestiariuszu). Rzuca się na Ciebie z ogromną siłą. Wiesz, że to już raczej twój koniec, ale próbujesz walczyć o swoje życie!")
                     walka(player, rapax())
-                    wypisz("Czujesz, że twoje siły słabną, a obrażenia są coraz większe. W końcu Rapax zadaje ci ostatni cios, a ty tracisz przytomność...")
+                    wypisz("Czujesz, że twoje siły słabną, a obrażenia są coraz większe. W końcu Rapax zadaje ci ostatni cios, a ty widzisz nagle biel...")
                     wypisz("Naciśnij Enter, aby kontynuować...")
                     input()
-                    main()
+                    main(player)
                     break
                 elif argument in player.inventory:
                     if argument == "piwo":

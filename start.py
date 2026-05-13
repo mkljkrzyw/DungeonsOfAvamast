@@ -14,19 +14,19 @@ def uruchom_gre():
         wypisz("Czy chcesz pominąć samouczek? (tak/nie)", slowo_bold="tak/nie", slowo_kolor={"tak": "GREEN", "nie": "RED"})
         odpowiedz = input("> ").strip().lower()
         if odpowiedz in ["tak", "nie"]:
-            return odpowiedz
+            if odpowiedz == "tak":
+                wypisz("Pominięto samouczek. Powodzenia w Dungeons of Avamast!")
+                main(player)
+            elif odpowiedz == "nie":
+                wyczysc_ekran()
+                tutorial(player)
         else:
              wyczysc_ekran()
              wypisz("Proszę wpisać 'tak' lub 'nie'.")
-        if odpowiedz == "tak":
-            wypisz("Pominięto samouczek. Powodzenia w Dungeons of Avamast!")
-            main()
-        elif odpowiedz == "nie":
-            wyczysc_ekran()
-            tutorial(player)
+        
 
 
-def main():
+def start():
     print("Tryb testowy: (tak/nie)")
     if input("> ").strip().lower() == "tak":
         player = Player("Testowy Bohater", 10, 10, 10, "Brak")
@@ -38,4 +38,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    start()

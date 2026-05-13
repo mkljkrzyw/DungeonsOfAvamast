@@ -177,7 +177,11 @@ def walka(player, przeciwnik):
                         print(f"{przeciwnik.name} nie dał rady uniknąć ataku!")
             atakujacy = player
     if player.hp <= 0:
-        print("Zostałeś pokonany! Game Over.")
+        print("Zostałeś pokonany!")
+        if przeciwnik.name=="Rapax":
+            return
+        else:
+            exit()
         
     else:        
         print("Wygrałeś walkę!")
