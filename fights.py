@@ -2,7 +2,7 @@ import os
 import random
 from blogoslawienstwa import krew, oczy, ciezar
 from ui import wypisz, bestiariusz
-
+os.system("cls")
 turagracz=""
 turapotwora=""
 czy_crit=False
@@ -26,6 +26,7 @@ def walka(player, przeciwnik):
             print("5. Unikaj")
             print("6. Ucieczka")
             choice = input("> ").strip()
+            os.system("cls")
             if choice == "1":
                     if random.randint(1, 100) >= 90:
                         print(f"Wykonujesz potężny atak!")
