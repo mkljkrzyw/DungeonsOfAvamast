@@ -89,6 +89,7 @@ def tutorial(player):
                     wypisz("Naciśnij Enter, aby kontynuować...")
                     input()
                     main()
+                    break
                 elif argument in player.inventory:
                     if argument == "piwo":
                         wypisz("Pijesz piwo i czujesz się odświeżony.", slowo_kolor={"piwo": "YELLOW"})

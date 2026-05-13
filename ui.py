@@ -4,7 +4,7 @@ import os
 import time
 import colorama
 
-from DungeonsOfAvamast.monsters import rapax
+from monsters import rapax
 
 try:
     import msvcrt

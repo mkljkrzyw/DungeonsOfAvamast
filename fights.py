@@ -3,8 +3,13 @@ import random
 from blogoslawienstwa import krew, oczy, ciezar
 from ui import wypisz, bestiariusz
 
-
+turagracz=""
+turapotwora=""
+czy_crit=False
 def walka(player, przeciwnik):
+    turagracz = ""
+    turapotwora = ""
+    czy_crit = False
     wypisz(f"Rozpoczynasz walkę z {przeciwnik.name}!")
     if player.dexterity > przeciwnik.dexterity:
         atakujacy = player
@@ -13,7 +18,6 @@ def walka(player, przeciwnik):
         action=random.randint(1, 3)
     while player.hp > 0 and przeciwnik.hp > 0:
         if atakujacy == player:
-            os.system("cls")
             print(f"\n{player.name} HP: {player.hp}/{player.max_hp} | {przeciwnik.name} HP: {przeciwnik.hp}/{przeciwnik.max_hp}")
             print("1. Atakuj")
             print("2. Użyj blogosławieństwa")
@@ -97,12 +101,10 @@ def walka(player, przeciwnik):
         
             atakujacy = przeciwnik
         if atakujacy == przeciwnik:
-            os.system("cls")
             if przeciwnik.strength==0:
                 print(f"{przeciwnik.name} stoi bezczynnie, nie zadaje obrażeń.")
                 przeciwnik.hp =przeciwnik.max_hp
             else:
-                os.system("cls")
                 action=random.randint(1, 3)
                 if action == 1:
                     if random.randint(1, 100) >= 90:
