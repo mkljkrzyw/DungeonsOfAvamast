@@ -1,66 +1,8 @@
 import os
-import sys
-import time
-import colorama
-from characters import Player
+from ui import wypisz
 
-COLORS = {
-    "RED": '\033[91m',
-    "GREEN": '\033[92m',
-    "YELLOW": '\033[93m',
-    "BLUE": '\033[94m',
-    "PURPLE": '\033[95m',
-    "CYAN": '\033[96m',
-    "RESET": '\033[0m'
-}
-STYL = {
-    "BOLD": '\033[1m',
-    "UNDERLINE": '\033[4m',
-    "NONE": '' # Pusty ciąg znaków, jeśli nie chcemy żadnego stylu
-}
 
-YELLOW = COLORS["YELLOW"]
-GREEN = COLORS["GREEN"]
-CYAN = COLORS["CYAN"]
-RESET = COLORS["RESET"]
 
-def wypisz(tekst, kolor="normalny", styl="brak", opoznienie=0.02, slowo_bold=None):
-    kod_koloru = COLORS.get(kolor, COLORS["RESET"])
-    kod_stylu = STYL.get(styl, STYL["NONE"])
-    kod_reset = '\033[0m'
-    
-    # Nakładamy styl i kolor
-    sys.stdout.write(kod_stylu + kod_koloru)
-    
-    # Jeśli chcemy pogrubić jedno słowo, piszemy słowo po słowie
-    if slowo_bold:
-        slowa = tekst.split()
-        for i, slowo in enumerate(slowa):
-            if slowo == slowo_bold:
-                sys.stdout.write(STYL["BOLD"])
-                for litera in slowo:
-                    sys.stdout.write(litera)
-                    sys.stdout.flush()
-                    time.sleep(opoznienie)
-                sys.stdout.write(STYL["NONE"])
-            else:
-                for litera in slowo:
-                    sys.stdout.write(litera)
-                    sys.stdout.flush()
-                    time.sleep(opoznienie)
-            if i < len(slowa) - 1:
-                sys.stdout.write(" ")
-    else:
-        for litera in tekst:
-            sys.stdout.write(litera)
-        sys.stdout.flush()
-        time.sleep(opoznienie)
-        
-    # Resetujemy wszystko na końcu
-    sys.stdout.write(kod_reset + "\n")
-    sys.stdout.flush()
-
-colorama.just_fix_windows_console()
 os.system("cls")
 def help():
     print('''
@@ -106,36 +48,43 @@ def tutorial(player):
         for i in rooms[currentRoom]:
             if i in directions:
                 avaiable_directions.append(i)
-        wypisz("\n" + rooms[currentRoom]["description"])
+        wypisz("\n" + rooms[currentRoom]["description"], slowo_bold=rooms[currentRoom]["objects"] if "objects" in rooms[currentRoom] else None)
         wypisz(f"\nDostępne kierunki: {', '.join(avaiable_directions)}")
-        turn = input("> ")
+        turn = input("> ").strip()
         
         os.system("cls")
-        turn = turn.split(" ",1)
-        if turn[0]=="use":
-            if "objects" in rooms[currentRoom] and turn[1] in rooms[currentRoom]["objects"]:
-                if turn[1] == "skrzynia":
+        turn = turn.split(" ", 1)
+        komenda = turn[0].lower() if turn and turn[0] else ""
+        argument = turn[1].strip().lower() if len(turn) > 1 else ""
+
+        if komenda == "use":
+            if not argument:
+                wypisz("Podaj obiekt do użycia, np. 'use skrzynia'.")
+            elif "objects" in rooms[currentRoom] and argument in rooms[currentRoom]["objects"]:
+                if argument == "skrzynia":
                     wypisz("Otwierasz skrzynię i znajdujesz piwo. Dodajesz je do swojego ekwipunku.")
                     player.inventory.append(rooms[currentRoom]["items_available"])
                     rooms[currentRoom]["items_available"] = None
-                    rooms[currentRoom]["objects"].remove(turn[1])
-                elif turn[1] == "kartka":
+                    rooms[currentRoom]["objects"].remove(argument)
+                elif argument == "kartka":
                     wypisz("Czytasz kartkę, a na niej napisane jest - 'Aby uzyskać pomoc odnośnie komend, wpisz 'help''.")
-                    rooms[currentRoom]["objects"].remove(turn[1])
+                    rooms[currentRoom]["objects"].remove(argument)
             else:
-                wypisz(f"Nie ma tutaj {turn[1]}.")
-        elif turn[0]=="go":
-            if turn[1] in rooms[currentRoom]:
-                currentRoom = rooms[currentRoom][turn[1]]
+                wypisz(f"Nie ma tutaj {argument}.")
+        elif komenda == "go":
+            if not argument:
+                wypisz("Podaj kierunek, np. 'go north'.")
+            elif argument in rooms[currentRoom]:
+                currentRoom = rooms[currentRoom][argument]
             else:
                 wypisz("Nie możesz iść w tym kierunku.")
-        elif turn[0]=="inventory":
+        elif komenda == "inventory":
             wypisz("Ekwipunek: " + str(player.inventory))
-        elif turn[0]=="stats":
+        elif komenda == "stats":
             player.show_stats()
-        elif turn[0]=="help":
+        elif komenda == "help":
             help()
-        elif turn[0]=="info":
+        elif komenda == "info":
             wypisz("Aktualna lokalizacja: " + currentRoom)
             wypisz(rooms[currentRoom]["description"])
 
