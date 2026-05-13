@@ -11,6 +11,9 @@ class Player:
         self.dexterity = dexterity
         self.intelligence = intelligence
         self.blessing = blessing
+        self.current_str=strength
+        self.current_dex=dexterity
+        self.current_int=intelligence
         self.inventory = ["bestiariusz"]
         self.weapon = fists()
         self.energy = 10
@@ -21,6 +24,10 @@ class Player:
             self.damage = self.weapon.damage*(self.dexterity//3)
         elif self.weapon.main_stat == "intelligence":
             self.damage = self.weapon.damage*(self.intelligence//3)
+        self.wzmocniony_dmg=self.damage
+        self.currentdmg=self.wzmocniony_dmg
+        self.defense=0
+        self.currentdefense=self.defense
 
     def show_stats(self):
         print(f"\n--- STATYSTYKI: {self.name} ---")
@@ -34,5 +41,5 @@ class Player:
         print(f"Inteligencja: {self.intelligence}")
         print(f"Błogosławieństwo: {self.blessing}")
         print(f"bron: {self.weapon.name if self.weapon else 'Brak'}")
-        print(f"Obrazenia: {self.damage}")
+        print(f"Obrazenia: {self.currentdmg}")
         print("-" * 30)

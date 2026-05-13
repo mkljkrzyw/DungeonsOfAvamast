@@ -3,6 +3,7 @@ from ui import wypisz, help, bestiariusz
 from monsters import kukla_treningowa, rapax
 from fights import walka
 from main import main
+from items import piwo
 
 os.system("cls")
 
@@ -92,8 +93,7 @@ def tutorial(player):
                     break
                 elif argument in player.inventory:
                     if argument == "piwo":
-                        wypisz("Pijesz piwo i czujesz się odświeżony.", slowo_kolor={"piwo": "YELLOW"})
-                        player.health = player.max_health
+                        piwo()
                         player.inventory.remove(argument)
                     elif argument == "bestiariusz":
                         bestiariusz()

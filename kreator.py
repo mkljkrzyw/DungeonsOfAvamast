@@ -89,7 +89,7 @@ def wybierz_blogoslawienstwo():
             slowo_bold="2.",
         )
         wypisz(
-            "3. Manipulacja ciężarem (Pozwala nosić najcięższe zbroje i broń, zwiększa obronę i obrażenia)",
+            "3. Manipulacja ciężarem (Pozwala nosić najcięższe zbroje i broń, zwiększa obronę i obrażenia po znalezieniu odpowiedniego ekwipunku)",
             opoznienie=0.01,
             slowo_bold="3.",
         )
