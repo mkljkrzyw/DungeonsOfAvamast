@@ -194,3 +194,17 @@ def wypisz(
 
     sys.stdout.write(kod_reset + "\n")
     sys.stdout.flush()
+
+def help():
+    wypisz('''
+Dungeons of Avamast
+=================
+Commands:
+    go [direction]  - poruszanie się w danym kierunku (np. "go north")
+    get [item]      - podniesienie przedmiotu (np. "get key")
+    use [item]      - użycie przedmiotu z pokoju, lub ekwipunku (np. "use key")
+    inventory       - wyświetlenie zawartości ekwipunku
+    stats           - wyświetlenie statystyk postaci
+    info            - wyświetlenie informacji o aktualnej lokalizacji
+    help            - wyświetlenie tej pomocy
+''', slowo_bold="go;get;use;inventory;stats;info;help", slowo_kolor={"Dungeons of Avamast": "YELLOW", "go": "GREEN", "get": "GREEN", "use": "GREEN", "inventory": "YELLOW", "stats": "YELLOW", "info": "CYAN", "help": "CYAN"}, kolor="RESET", styl="BOLD")

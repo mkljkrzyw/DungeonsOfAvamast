@@ -32,14 +32,14 @@ def zapytaj_tak_nie(komunikat, niepoprawny="Proszę wpisać 'tak' lub 'nie'.", *
 
 def wybierz_imie_gracza():
     while True:
-        wypisz("Podaj imię swojego bohatera:")
+        wypisz("Podaj imię swojego bohatera:", kolor="CYAN")
         player_name = input("> ").strip()
         wyczysc_ekran()
 
         potwierdzenie = zapytaj_tak_nie(
 
             f"Twoje imię to {player_name}. Czy chcesz je zachować? (tak/nie)", 
-            slowo_bold="tak/nie",
+            slowo_bold="tak/nie;{player_name}",
             slowo_kolor={"tak": "GREEN", "nie": "RED"}
         )
         wyczysc_ekran()
@@ -50,7 +50,7 @@ def wybierz_imie_gracza():
 
 def wybierz_statystyki():
     while True:
-        wypisz("Wybierz swoją główną cechę:")
+        wypisz("Wybierz swoją główną cechę:", kolor="CYAN")
         wypisz("1. Siła", slowo_bold="1.")
         wypisz("2. Zręczność", slowo_bold="2.")
         wypisz("3. Inteligencja", slowo_bold="3.")
@@ -66,7 +66,7 @@ def wybierz_statystyki():
                 f"Siła: {strength}, Zręczność: {dexterity}, Inteligencja: {intelligence}. "
                 "Czy chcesz je zachować? (tak/nie)"
             ),
-            slowo_bold="tak/nie",
+            slowo_bold="tak/nie;{dexterity};{intelligence};{strength}",
             slowo_kolor={"tak": "GREEN", "nie": "RED"}
         )
         wyczysc_ekran()
@@ -77,7 +77,7 @@ def wybierz_statystyki():
 
 def wybierz_blogoslawienstwo():
     while True:
-        wypisz("Teraz wybierz swoje błogosławieństwo:", opoznienie=0.01)
+        wypisz("Teraz wybierz swoje błogosławieństwo:", opoznienie=0.01, kolor="CYAN", styl="BOLD")
         wypisz(
             "1. Oczy przyszłości (pozwala zobaczyć ukryte pułapki, skarby i przyszłe ruchy przeciwników)",
             opoznienie=0.01,
@@ -101,7 +101,7 @@ def wybierz_blogoslawienstwo():
 
         potwierdzenie = zapytaj_tak_nie(
             f"Twoje błogosławieństwo to {blessing}. Czy chcesz je zachować? (tak/nie)",
-            slowo_bold="tak/nie",
+            slowo_bold="tak/nie;{blessing}",
             slowo_kolor={"tak": "GREEN", "nie": "RED"}
         )
         wyczysc_ekran()
@@ -111,10 +111,9 @@ def wybierz_blogoslawienstwo():
 
 
 def utworz_postac():
-    wypisz("DUNGEONS OF AVAMAST", kolor="GREEN", styl="BOLD", opoznienie=0.01)
+    wypisz("DUNGEONS OF AVAMAST", kolor="YELLOW", styl="BOLD", opoznienie=0.01)
     wypisz(
         "Witaj w Dungeons of Avamast! Zanim rozpoczniesz swoją przygodę, musisz stworzyć swojego bohatera.",
-        kolor="CYAN",
         styl="NONE",
         opoznienie=0.02,
     )
