@@ -1,11 +1,11 @@
 class rapax:
     name = "Rapax"
-    hp = 200
-    max_hp = 200
+    hp = 500
+    max_hp = 500
     strength = 50
     dexterity = 10
     intelligence = 10
-    damage = 20
+    damage = 40
 class kukla_treningowa:
     name = "Kukła treningowa"
     hp = 9999999
