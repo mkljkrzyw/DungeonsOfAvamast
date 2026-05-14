@@ -2,28 +2,46 @@ import os
 from ui import wypisz, help, bestiariusz
 from monsters import kukla_treningowa, rapax
 from fights import walka
+from characters import Player
+from weapons import *
 
 def main(player):
-    currentRoom = "Sypialnia"
-    directions=["north", "south", "east", "west"]
+    player.hp=player.max_hp
+    player.inventory=["bestiariusz"]
+    player.weapon=fists()
+    player.energy=player.max_energy
+    currentRoom = "Sala Sypialniana"
+    directions=["north", "south", "east", "west", "exit"]
     avaiable_directions = []
     rooms = {
-    "Sypialnia": {
-        "description": "Jesteś w swojej sypialni. Widzisz łóżko, skrzynię, drzwi prowadzące na korytarz oraz kartkę zawieszoną na ścianie.",
-        "objects": ["skrzynia","kartka"],
+    "Sala Sypialniana": {
+        "description": "Jesteś w dużym pomieszczeniu z wysokim sufitem, z niewielkich okien dociera słabe mocne światło spotęgowane śniegiem znajdującym się na dworze. Widzisz wiele twardych łóżek, stolik, oraz leżący na twoim notatnik. Na wschodzie znajdują się drzwi prowadzące do głównego holu",
+        "objects": ["lozko","kartka"],
         "items_available": "piwo",
-        "west": "Korytarz"
+        "east": "Hol"
     },
-    "Korytarz": {
-        "description": "Stoisz na korytarzu. Widzisz drzwi prowadzące do sypialni oraz drzwi prowadzące na dziedziniec",
-        "east": "Sypialnia",
-        "north": "dziedziniec"
+    "Hol": {
+        "description": "Stoisz w głównym holu, czujesz mróz. Widzisz nierozpalony kominek, zachodnie drzwi prowadzące do sali sypialnianej, połnocne drzwi prowadzące do biblioteki, wschodnie drzwi prowadzące do jadali, oraz wielkie drzwi na południu prowadzące na zewnątrz",
+        "objects": ["kominek"],
+        "west": "Sala Sypialniana",
+        "north": "Biblioteka",
+        "east": "Jadalnia",
+        "south": "Dwor"
     },
-    "dziedziniec": {
+    "Biblioteka":{
+        "description": "Jesteś w bibliotece. Widzisz wiele regałów z książkami, biurko z krzesłem, oraz drzwi prowadzące do głównego holu",
+        "objects": ["regały"],
+        "south": "Hol"
+    },
+    "Jadalnia": {
+        "description": "Jesteś w jadalni. Widzisz długi stół, kilka krzeseł, oraz drzwi prowadzące do głównego holu",
+        "objects": ["stół"],
+        "west": "Hol"
+    },
+    "Dwor": {
         "description": "Jesteś na dziedzińcu. Widzisz fontannę, ławkę, kukłę treningową oraz drzwi prowadzące do korytarza...",
-        #Nagle atakuje cię Rapax. Jego ostre szpony przebijają twoją skórę, a jego pazury tną głęboko. Zanim zdążysz zareagować czujesz nagły ból, a potem wszystko staje się białe.
         "objects": ["lawka", "kukla treningowa"],
-        "south": "Korytarz"
+        "north": "Hol"
     }
     }
     os.system("cls")
@@ -33,7 +51,7 @@ def main(player):
         for i in rooms[currentRoom]:
             if i in directions:
                 avaiable_directions.append(i)
-        wypisz(f"\n --- {currentRoom} ---", styl="BOLD", kolor="GREEN")
+        wypisz(f"\n --- {currentRoom.upper()} ---", styl="BOLD", kolor="GREEN")
         wypisz(f"\n" + rooms[currentRoom]["description"])
         if "objects" in rooms[currentRoom]:
             wypisz(f"\nObiekty: {', '.join(rooms[currentRoom]['objects'])}", slowo_bold=rooms[currentRoom]["objects"], slowo_kolor={obj: "YELLOW" for obj in rooms[currentRoom]["objects"]})

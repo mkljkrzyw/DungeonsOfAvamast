@@ -3,3 +3,8 @@ class fists:
         self.name = "pięści"
         self.main_stat = "strength"
         self.damage = 2
+class prosty_sztylet:
+    def __init__(self):
+        self.name = "sztylet"
+        self.main_stat = "dexterity"
+        self.damage = 5

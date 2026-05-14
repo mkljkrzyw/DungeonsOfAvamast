@@ -29,9 +29,14 @@ def uruchom_gre():
 def start():
     print("Tryb testowy: (tak/nie)")
     if input("> ").strip().lower() == "tak":
-        player = Player("Testowy Bohater", 10, 10, 10, "Brak")
-        tutorial(player)
-        return
+        print("Samouczek? (tak/nie)")
+        if input("> ").strip().lower() == "tak":
+            player = Player("Testowy Bohater", 10, 10, 10, "Brak")
+            tutorial(player)
+            return
+        else:
+            player = Player("Testowy Bohater", 10, 10, 10, "Brak")
+            main(player)
     wyczysc_ekran()
     uruchom_gre()
     
