@@ -1,8 +1,8 @@
 from characters import Player
 from ui import wypisz
-def piwo():
+def piwo(Player):
     wypisz("Pijesz piwo i czujesz się odświeżony.")
-    if Player.health + 5 > Player.max_health:
-        Player.health = Player.max_health
+    if Player.hp + 5 > Player.max_hp:
+        Player.hp = Player.max_hp
     else:
-        Player.health += 5
+        Player.hp += 5

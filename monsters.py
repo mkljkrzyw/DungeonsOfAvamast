@@ -16,3 +16,5 @@ class kukla_treningowa:
     dexterity = 0
     intelligence = 0
     damage = 0
+    defense = 10
+    currentdefense=defense

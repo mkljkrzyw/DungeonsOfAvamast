@@ -57,7 +57,8 @@ def tutorial(player):
             wypisz(f"Przedmioty do podniesienia: {', '.join(rooms[currentRoom]['items_available'])}", slowo_bold=rooms[currentRoom]["items_available"], slowo_kolor={item: "YELLOW" for item in rooms[currentRoom]["items_available"]})
         wypisz(f"Dostępne kierunki: {', '.join(avaiable_directions)}", slowo_bold=avaiable_directions, slowo_kolor={dir: 'GREEN' for dir in avaiable_directions})
         turn = input("> ").strip()
-        
+        while turn=="":
+            turn = input()
         os.system("cls")
         turn = turn.split(" ", 1)
         komenda = turn[0].lower() if turn and turn[0] else ""
@@ -99,7 +100,7 @@ def tutorial(player):
                     break
             elif argument in player.inventory:
                 if argument == "piwo":
-                    piwo()
+                    piwo(player)
                     player.inventory.remove(argument)
                 elif argument == "bestiariusz":
                     bestiariusz()
@@ -153,6 +154,8 @@ def tutorial(player):
         elif komenda == "info":
             wypisz("Aktualna lokalizacja: " + currentRoom)
             wypisz(rooms[currentRoom]["description"])
-
+        elif komenda=="":
+            print("")
+            
         else:
             wypisz("Nieznana komenda. Wpisz 'help' aby uzyskać listę dostępnych komend.", kolor="RED", slowo_kolor={"help": "CYAN"})
