@@ -3,7 +3,8 @@ from kreator import zapytaj_tak_nie, utworz_postac, wyczysc_ekran
 from tutorial import tutorial
 from ui import wypisz
 from main import main
-
+from fights import walka
+from monsters import test
 
 def uruchom_gre():
     wyczysc_ekran()
@@ -52,12 +53,17 @@ def start():
     if input("> ").strip().lower() == "tak":
         print("Samouczek? (tak/nie)")
         if input("> ").strip().lower() == "tak":
-            player = Player("Testowy Bohater", 10, 10, 10, "Brak")
+            player = Player("Testowy Bohater", 10, 10, 10, "Manipulacja krwią")
             tutorial(player)
             return
         else:
-            player = Player("Testowy Bohater", 10, 10, 10, "Brak")
-            main(player)
+            print("Walka? (tak/nie)")
+            if input("> ").strip().lower() == "tak":
+                player = Player("Testowy Bohater", 10, 10, 10, "Manipulacja krwią")
+                walka(player, test)
+            else:
+                player = Player("Testowy Bohater", 10, 10, 10, "Manipulacja krwią")
+                main(player)
     wyczysc_ekran()
     uruchom_gre()
     

@@ -18,3 +18,13 @@ class kukla_treningowa:
     damage = 0
     defense = 10
     currentdefense=defense
+class test:
+    name = "Test"
+    hp = 100
+    max_hp = 100
+    strength = 10
+    dexterity = 10
+    intelligence = 10
+    damage = 10
+    defense = 10
+    currentdefense=defense

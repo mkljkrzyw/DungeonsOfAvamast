@@ -1,5 +1,6 @@
 import os
 import random
+import blogoslawienstwa
 from blogoslawienstwa import krew, oczy, ciezar
 from ui import wypisz, bestiariusz
 from items import *
@@ -30,29 +31,29 @@ def walka(player, przeciwnik):
             choice = input("> ").strip()
             os.system("cls")
             if choice == "1":
-                    if(player.blessing=="krew" and uderzenie==True):
-                            player_damage = Player.wzmocniony_dmg
-                            uderzenie=False
-                    elif(player.blessing=="krew" and zwiekszenie==True):
-                            player_damage = Player.currentdmg
+                    if(player.blessing=="Manipulacja krwią" and blogoslawienstwa.uderzenie==True):
+                            player_damage = player.wzmocniony_dmg
+                            blogoslawienstwa.uderzenie=False
+                    elif(player.blessing=="Manipulacja krwią" and blogoslawienstwa.zwiekszenie==True):
+                            player_damage = player.currentdmg
                             licznik+=1
                             if licznik%3==0:
-                                Player.currentdmg=Player.currentdmg/1.2
-                                zwiekszenie=False
-                            zwiekszenie=False
-                    elif(player.blessing=="oczy" and unikanie==True):
-                            unikanie=False
+                                player.currentdmg=player.currentdmg/1.2
+                                blogoslawienstwa.zwiekszenie=False
+                            blogoslawienstwa.zwiekszenie=False
+                    elif(player.blessing=="Oczy przyszłości" and blogoslawienstwa.unikanie==True):
+                            blogoslawienstwa.unikanie=False
                             player_damage = player.damage
-                    elif(player.blessing=="oczy" and zwiekszenie==True):
-                            player_damage = Player.currentdmg
+                    elif(player.blessing=="Oczy przyszłości" and blogoslawienstwa.zwiekszenie==True):
+                            player_damage = player.currentdmg
                             licznik+=1
                             if licznik%3==0:
-                                Player.currentdmg=Player.currentdmg/1.2
-                                zwiekszenie=False
-                            zwiekszenie=False
-                    elif(player.blessing=="ciezar" and uderzenie==True):
-                            player_damage = Player.currentdmg * 5
-                            uderzenie=False
+                                player.currentdmg=player.currentdmg/1.2
+                                blogoslawienstwa.zwiekszenie=False
+                            blogoslawienstwa.zwiekszenie=False
+                    elif(player.blessing=="Manipulacja ciężarem" and blogoslawienstwa.uderzenie==True):
+                            player_damage = player.currentdmg * 5
+                            blogoslawienstwa.uderzenie=False
                     if random.randint(1, 100) >= 90:
                         print(f"Wykonujesz potężny atak!")
                         
@@ -68,33 +69,39 @@ def walka(player, przeciwnik):
                         print(f"Atakujesz, ale {przeciwnik.name} broni się przed atakiem!")
                         player_damage=player_damage//2
                         turapotwora=""
+                        final_damage = int(player_damage / (1 + przeciwnik.currentdefense * 0.1))
                         if czy_crit==True:
-                            wypisz(f"Wykonujesz potężny atak, ale {przeciwnik.name} broni się przed atakiem! Otrzymuje tylko {player_damage//(przeciwnik.currentdefense)*0.1} obrażeń! (KRYTYCZNY)",opoznienie=0, slowo_kolor={f"{player_damage//(przeciwnik.currentdefense)*0.1} obrażeń": "YELLOW"})
+                            wypisz(f"Wykonujesz potężny atak, ale {przeciwnik.name} broni się przed atakiem! Otrzymuje tylko {final_damage} obrażeń! (KRYTYCZNY)",opoznienie=0, slowo_kolor={f"{final_damage} obrażeń": "YELLOW"})
                             czy_crit=False
                         else:
-                            wypisz(f"Zadajesz tylko {player_damage//(przeciwnik.currentdefense)*0.1} obrażeń!", opoznienie=0,slowo_kolor={f"{player_damage//(przeciwnik.currentdefense)*0.1} obrażeń": "GREEN"})
+                            wypisz(f"Zadajesz tylko {final_damage} obrażeń!", opoznienie=0,slowo_kolor={f"{final_damage} obrażeń": "GREEN"})
                             czy_crit=False
                             
                     else:
+                        final_damage = int(player_damage / (1 + przeciwnik.currentdefense * 0.1))
                         if czy_crit==True:
-                            wypisz(f"Wykonujesz potężny atak. {przeciwnik.name} otrzymuje {player_damage//(przeciwnik.currentdefense)*0.1} obrażeń!", opoznienie=0,slowo_kolor={f"{player_damage//(przeciwnik.currentdefense)*0.1} obrażeń! (KRYTYCZNY)": "YELLOW"})
+                            wypisz(f"Wykonujesz potężny atak. {przeciwnik.name} otrzymuje {final_damage} obrażeń!", opoznienie=0,slowo_kolor={f"{final_damage} obrażeń! (KRYTYCZNY)": "YELLOW"})
                             czy_crit=False
                         else:
-                            wypisz(f"Zadajesz {player_damage//(przeciwnik.currentdefense)*0.1} obrażeń!", opoznienie=0,slowo_kolor={f"{player_damage//(przeciwnik.currentdefense)*0.1} obrażeń": "GREEN"})
+                            wypisz(f"Zadajesz {final_damage} obrażeń!", opoznienie=0,slowo_kolor={f"{final_damage} obrażeń": "GREEN"})
                             czy_crit=False
-                    przeciwnik.hp -= player_damage//(przeciwnik.currentdefense)*0.1
+                    przeciwnik.hp -= final_damage
                     player_damage=player.damage
                     przeciwnik.currentdefense=przeciwnik.defense
             elif choice == "2":
                 if player.energy >= 10:
-                    if player.blessing == "krew":
-                        krew()
-                    elif player.blessing == "oczy":
-                        oczy()
+                    print("Używasz swojego błogosławieństwa!")
+                    if player.blessing == "Manipulacja krwią":
+                        #print("krew")
+                        krew(player)
+                    elif player.blessing == "Oczy przyszłości":
+                        #print("oczy")
+                        oczy(player)
                         if przeciwnik.name=="Rapax":
                             wypisz("Nagle dociera do Ciebie, że ta walka to Twój koniec, ale też wyzwolenie z tego dziwnego miejsca. ")
-                    elif player.blessing == "ciezar":
-                        ciezar()
+                    elif player.blessing == "Manipulacja ciężarem":
+                        #print("ciezar")
+                        ciezar(player)
                 else:
                     wypisz("Nie masz wystarczająco energii, aby użyć błogosławieństwa!", slowo_kolor={"Nie masz wystarczająco energii, aby użyć błogosławieństwa!": "RED"})
             elif choice == "3":
@@ -105,7 +112,7 @@ def walka(player, przeciwnik):
                 for each, item in enumerate(player.inventory, 1):
                     if item_choice == str(each):
                         if item == "piwo":
-                            piwo()
+                            piwo(player)
                             player.inventory.remove(item)
                         elif item == "bestiariusz":
                             bestiariusz()
@@ -150,21 +157,23 @@ def walka(player, przeciwnik):
                         print(f"{przeciwnik.name} atakuje, ale Ty bronisz się przed atakiem!")
                         enemy_damage=enemy_damage//2
                         turagracz=""
+                        final_enemy_damage = int(enemy_damage / (1 + player.currentdefense * 0.1))
                         if czy_crit==True:
-                            wypisz(f"{przeciwnik.name} wykonuje potężny atak, ale Ty bronisz się przed atakiem! Otrzymujesz tylko {enemy_damage//(1+player.currentdefense*0.1)} obrażeń! (KRYTYCZNY)",opoznienie=0, slowo_kolor={f"{enemy_damage//(1+player.currentdefense*0.1)} obrażeń": "RED"})
+                            wypisz(f"{przeciwnik.name} wykonuje potężny atak, ale Ty bronisz się przed atakiem! Otrzymujesz tylko {final_enemy_damage} obrażeń! (KRYTYCZNY)",opoznienie=0, slowo_kolor={f"{final_enemy_damage} obrażeń": "RED"})
                             czy_crit=False
                         else:
-                            wypisz(f"{przeciwnik.name} zadaje Ci tylko {enemy_damage//(1+player.currentdefense*0.1)} obrażeń!", opoznienie=0,slowo_kolor={f"{enemy_damage//(1+player.currentdefense*0.1)} obrażeń": "RED"})
+                            wypisz(f"{przeciwnik.name} zadaje Ci tylko {final_enemy_damage} obrażeń!", opoznienie=0,slowo_kolor={f"{final_enemy_damage} obrażeń": "RED"})
                             czy_crit=False
                             
                     else:
+                        final_enemy_damage = int(enemy_damage / (1 + player.currentdefense * 0.1))
                         if czy_crit==True:
-                            wypisz(f"{przeciwnik.name} wykonuje potężny atak. Otrzymujesz {enemy_damage//(1+player.currentdefense*0.1)} obrażeń! (KRYTYCZNY)", opoznienie=0,slowo_kolor={f"{enemy_damage//(1+player.currentdefense*0.1)} obrażeń": "RED"})
+                            wypisz(f"{przeciwnik.name} wykonuje potężny atak. Otrzymujesz {final_enemy_damage} obrażeń! (KRYTYCZNY)", opoznienie=0,slowo_kolor={f"{final_enemy_damage} obrażeń": "RED"})
                             czy_crit=False
                         else:
-                            wypisz(f"{przeciwnik.name} zadaje Ci {enemy_damage//(1+player.currentdefense*0.1)} obrażeń!", opoznienie=0,slowo_kolor={f"{enemy_damage//(1+player.currentdefense*0.1)} obrażeń": "RED"})
+                            wypisz(f"{przeciwnik.name} zadaje Ci {final_enemy_damage} obrażeń!", opoznienie=0,slowo_kolor={f"{final_enemy_damage} obrażeń": "RED"})
                             czy_crit=False
-                    player.hp -= enemy_damage//(1+player.currentdefense*0.1)
+                    player.hp -= final_enemy_damage
                     player.currentdefense=player.defense
                 elif action == 2:
                     turapotwora="obrona"

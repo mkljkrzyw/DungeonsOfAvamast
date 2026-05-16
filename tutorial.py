@@ -88,6 +88,7 @@ def tutorial(player):
                     wypisz("Pamiętaj, że każda decyzja w walce ma swoje konsekwencje, więc wybieraj mądrze i dostosuj swoją strategię do sytuacji!")
                     wypisz("Naciśnij Enter, aby rozpocząć walkę...")
                     input()
+                    os.system("cls")
                     walka(player, kukla_treningowa())
                     os.system("cls")
                     wypisz("Teraz wiesz już jak walczyć! Pora przetestować twoje umiejętności")
