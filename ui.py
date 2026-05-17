@@ -221,6 +221,7 @@ Commands:
     go [direction]  - poruszanie się w danym kierunku (np. "go north")
     get [item]      - podniesienie przedmiotu (np. "get key")
     use [item]      - użycie przedmiotu z pokoju, lub ekwipunku (np. "use key")
+    talk [name]     - rozmowa z postacią (np. "talk Tob")
     inventory       - wyświetlenie zawartości ekwipunku
     stats           - wyświetlenie statystyk postaci
     info            - wyświetlenie informacji o aktualnej lokalizacji

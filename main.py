@@ -1,4 +1,5 @@
 import os
+from books import bestie, kampania
 from ui import wypisz, help, bestiariusz
 from monsters import kukla_treningowa, rapax
 from fights import walka
@@ -10,6 +11,7 @@ def main(player):
     player.inventory=["bestiariusz"]
     player.weapon=fists()
     player.energy=player.max_energy
+    palisie=False
     currentRoom = "Sala Sypialniana"
     directions=["north", "south", "east", "west", "enter", "exit"]
     avaiable_directions = []
@@ -17,7 +19,6 @@ def main(player):
     "Sala Sypialniana": {
         "description": "Jesteś w dużym pomieszczeniu z wysokim sufitem, z niewielkich okien dociera słabe mocne światło spotęgowane śniegiem znajdującym się na dworze. Widzisz wiele twardych łóżek, stolik, oraz leżący na twoim notatnik. Na wschodzie znajdują się drzwi prowadzące do głównego holu",
         "objects": ["lozko","kartka"],
-        "items_available": "piwo",
         "east": "Hol"
     },
     "Hol": {
@@ -30,22 +31,27 @@ def main(player):
     },
     "Biblioteka":{
         "description": "Jesteś w bibliotece. Widzisz wiele regałów z książkami, biurko z krzesłem, oraz drzwi prowadzące do głównego holu",
-        "objects": ["regały"],
+        "objects": ["regaly"],
         "south": "Hol"
     },
     "Jadalnia": {
         "description": "Jesteś w jadalni. Widzisz długi stół, kilka krzeseł, oraz drzwi prowadzące do głównego holu",
-        "objects": ["stół"],
+        "objects": ["stol"],
         "west": "Hol"
     },
     "Dwor": {
         "description": "Jesteś na dziedzińcu. Widzisz fontannę, ławkę, kukłę treningową oraz drzwi prowadzące do korytarza...",
-        "objects": ["lawka", "kukla treningowa"],
+        "objects": ["kukla treningowa"],
+        "items_available": ["drewno"],
+        #"characters": [""],
         "north": "Hol",
         "exit": "(0,0)"
     },
     #----MAPA ŚWIATA----
-    
+    "Brama Miasta": {
+        "description": "Wchodzisz do tętniącego życiem miasta. Widzisz kupców, rzemieślników, oraz mieszkańców. Możesz porozmawiać z kupcami, lub udać się na rynek.",
+        "exit": "(-2,2)"
+    },
 
 
     "(0,0)": {
@@ -60,7 +66,11 @@ def main(player):
     
     "(-2,2)": {
         "description": "Dotarłeś do bram tętniącego życiem Miasta. Słyszysz zgiełk kupców. Wpisz 'wejdź', aby wejść do miasta.",
-        "enter": "Brama Miasta" # Przenosi do kolejnego zamkniętego "lochu"
+        "enter": "Brama Miasta", # Przenosi do kolejnego zamkniętego "lochu"
+        "north": "(-2,3)",
+        "south": "(-2,1)",
+        "east": "(-1,2)",
+        "west": "(-3,2)"
     }
     }
     for x in range(-2, 3):
@@ -83,6 +93,15 @@ def main(player):
     os.system("cls")
     wypisz("Budzisz się na niewygodnym materacu w ciemnym pomieszczeniu. Jesteś w południowej wieży w Thalindorze. Czujesz jedynie mróz i wilgoć. Widzisz przed sobą drzwi, które prowadzą na korytarz. Co robisz?", slowo_bold="drzwi", slowo_kolor={"drzwi": "YELLOW"})
     while True:
+        if palisie:
+            rooms["Hol"]["description"] = "Stoisz w głównym holu, czujesz ciepło. Widzisz rozpalony kominek, zachodnie drzwi prowadzące do sali sypialnianej, połnocne drzwi prowadzące do biblioteki, wschodnie drzwi prowadzące do jadali, oraz wielkie drzwi na południu prowadzące na zewnątrz"
+            # Dodaj postać na dworze jeśli jeszcze jej nie ma
+            if "Dwor" in rooms:
+                if "characters" in rooms["Dwor"]:
+                    if "Tob" not in rooms["Dwor"]["characters"]:
+                        rooms["Dwor"]["characters"].append("Tob")
+                else:
+                    rooms["Dwor"]["characters"] = ["Tob"]
         avaiable_directions = []
         for i in rooms[currentRoom]:
             if i in directions:
@@ -91,6 +110,10 @@ def main(player):
         wypisz(f"\n" + rooms[currentRoom]["description"])
         if "objects" in rooms[currentRoom]:
             wypisz(f"\nObiekty: {', '.join(rooms[currentRoom]['objects'])}", slowo_bold=rooms[currentRoom]["objects"], slowo_kolor={obj: "YELLOW" for obj in rooms[currentRoom]["objects"]})
+        if "items_available" in rooms[currentRoom] and rooms[currentRoom]["items_available"]:
+            wypisz(f"Przedmioty do podniesienia: {', '.join(rooms[currentRoom]['items_available'])}", slowo_bold=rooms[currentRoom]["items_available"], slowo_kolor={item: "YELLOW" for item in rooms[currentRoom]["items_available"]})
+        if "characters" in rooms[currentRoom]:
+            wypisz(f"Postacie: {', '.join(rooms[currentRoom]['characters'])}", slowo_bold=rooms[currentRoom]["characters"], slowo_kolor={char: "YELLOW" for char in rooms[currentRoom]["characters"]})
         wypisz(f"Dostępne kierunki: {', '.join(avaiable_directions)}", slowo_bold=avaiable_directions, slowo_kolor={dir: 'GREEN' for dir in avaiable_directions})
         turn = input("> ").strip()
         while turn=="":
@@ -101,7 +124,34 @@ def main(player):
         argument = turn[1].strip().lower() if len(turn) > 1 else ""
         
         if komenda == "use":
-            print("xd")
+            if argument == "kartka" and currentRoom == "Sala Sypialniana":
+                wypisz("Na kartce napisane jest 'Wyszedłem po drzewo. Coś jeszcze powinno zostać na dworze. Rozpal w kominku, żebyśmy nie zamarźli.\n ~ Tob'")
+            elif argument == "kominek" and currentRoom == "Hol":
+                if "drewno" in player.inventory:
+                    wypisz("Rozpalasz kominek, dając sobie trochę ciepła. Czujesz się bezpieczniej.")
+                    player.inventory.remove("drewno")
+                    rooms[currentRoom]["objects"].remove(argument)
+                    palisie=True
+                else:
+                    wypisz("Nie masz nic, czym mógłbyś rozpalić kominek.")
+            elif argument == "regaly" and currentRoom == "Biblioteka":
+                wypisz("Przeglądasz regały i znajdujesz kilka interesujących książek. Co chcesz przeczytać?")
+                wypisz("Co chcesz przeczytać? \n1. Bestiariusz \n2. VALANDORSKA KAMPANIA WOJENNA I JEJ KONSEKWENCJE \n3. Powrót" )
+                choice = input("> ").strip()
+                if choice == "1":
+                    bestie()
+                elif choice == "2":
+                    kampania()
+                elif choice == "3":
+                    os.system("cls")
+                    continue
+            elif argument == "lozko":
+                wypisz("Jest zbyt zimno żeby się położyć. Poza tym, nie masz czasu na drzemkę.")
+            elif argument == "kukla treningowa" and currentRoom == "Dwor":
+                wypisz("Podchodzisz do kukły treningowej i zaczynasz ją atakować, ćwicząc swoje umiejętności bojowe.")
+                walka(player, kukla_treningowa)
+            elif argument == "stol":
+                wypisz("Stół jest solidny, ale nie wygląda na coś, co mógłbyś przenieść.")
         elif komenda == "go":
             if not argument:
                 wypisz("Nieznany kierunek.", kolor="RED")
@@ -109,6 +159,15 @@ def main(player):
                 currentRoom = rooms[currentRoom][argument]
             else:
                 wypisz("Nie możesz iść w tym kierunku.", kolor="RED")
+        elif komenda == "get":
+            if not argument:
+                wypisz("Podaj obiekt do użycia, np. 'get piwo'.", slowo_kolor={"use": "YELLOW"})
+            elif argument in rooms[currentRoom].get("items_available", []):
+                wypisz(f"Podnosisz {argument} i dodajesz go do swojego ekwipunku.", slowo_kolor={argument: "YELLOW"})
+                player.inventory.append(argument)
+                rooms[currentRoom]["items_available"].remove(argument)
+            else:
+                wypisz(f"Nie ma tutaj przedmiotu {argument}.", slowo_kolor={argument: "RED"})
         elif komenda == "inventory":
             wypisz("Ekwipunek: " + str(player.inventory))
         elif komenda == "stats":

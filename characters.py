@@ -14,7 +14,7 @@ class Player:
         self.current_str=strength
         self.current_dex=dexterity
         self.current_int=intelligence
-        self.inventory = ["bestiariusz"]
+        self.inventory = []
         self.weapon = fists()
         self.energy = 10
         self.max_energy = 10

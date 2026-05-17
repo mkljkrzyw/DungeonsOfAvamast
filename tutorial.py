@@ -38,6 +38,8 @@ def tutorial(player):
     wypisz("Na początku każdego pomieszczenia, zostanie wyświetlony jego opis oraz dostępne kierunki, w które możesz się udać. Aby poruszać się, użyj komendy 'go' wraz z kierunkiem, np. 'go north'.", slowo_kolor={"go": "GREEN"})
     wypisz("Aby wchodzić w interakcje z przedmiotami, użyj komendy 'use' wraz z nazwą przedmiotu, np. 'use skrzynia'.", slowo_kolor={"use": "GREEN"})
     wypisz("Możesz również sprawdzić swój ekwipunek za pomocą komendy 'inventory' oraz swoje statystyki za pomocą komendy 'stats'.", slowo_kolor={"inventory": "YELLOW", "stats": "YELLOW"})
+    wypisz("W niektórych pomieszczeniach znajdują się postacie z którymi możesz porozmawiać, używając komendy 'talk' wraz z imieniem postaci, np. 'talk Tob'.", slowo_kolor={"talk": "GREEN"})
+    wypisz("Jeżeli zdobędziesz jakąś broń lub zbroję, możesz ją wyposażyć używając komendy 'use' wraz z nazwą przedmiotu, np. 'use sztylet'.", slowo_kolor={"use": "GREEN", "sztylet": "YELLOW"})
     wypisz("Jeżeli będziesz potrzebować pomocy, zawsze możesz wpisać 'help', aby wyświetlić listę dostępnych komend.", slowo_kolor={"help": "CYAN"})
     wypisz("Teraz, gdy znasz już podstawy, czas rozpocząć swoją przygodę w Dungeons of Avamast! Powodzenia!", kolor="CYAN", styl="BOLD")
     wypisz("Naciśnij Enter, aby kontynuować...")
@@ -93,10 +95,14 @@ def tutorial(player):
                     os.system("cls")
                     wypisz("Teraz wiesz już jak walczyć! Pora przetestować twoje umiejętności")
                     wypisz("Nagle słyszysz ryk dochodzący z dziedzińca. To Rapax, potężna bestia (możesz dowiedzieć się o nim więcej w bestiariuszu). Rzuca się na Ciebie z ogromną siłą. Wiesz, że to już raczej twój koniec, ale próbujesz walczyć o swoje życie!")
+                    wypisz("Naciśnij Enter, aby rozpocząć walkę...")
+                    input()
+                    os.system("cls")
                     walka(player, rapax())
                     wypisz("Czujesz, że twoje siły słabną, a obrażenia są coraz większe. W końcu Rapax zadaje ci ostatni cios, a ty widzisz nagle biel...")
                     wypisz("Naciśnij Enter, aby kontynuować...")
                     input()
+                    
                     main(player)
                     break
             elif argument in player.inventory:
