@@ -28,3 +28,13 @@ class test:
     damage = 10
     defense = 10
     currentdefense=defense
+class dopler:
+    name="Potwór przypominający smutną kobietę"
+    hp=50
+    max_hp=50
+    strength = 5
+    dexterity = 5
+    intelligence = 5
+    damage = 5
+    defense = 5
+    currentdefense=defense

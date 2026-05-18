@@ -5,97 +5,55 @@ from monsters import kukla_treningowa, rapax
 from fights import walka
 from characters import Player
 from weapons import *
-
+from lokacjewiz import *
+from mapa import *
+from quests import *
 def main(player):
     player.hp=player.max_hp
     player.inventory=[""]
-    player.weapon=fists()
+    player.weapon=krotki_miecz()
     player.energy=player.max_energy
+    quests={}
     palisie=False
     tob_location = "hidden"
     tob1=False
     tob2=False
     currentRoom = "Sala Sypialniana"
-    directions=["north", "south", "east", "west", "enter", "exit"]
-    avaiable_directions = []
-    rooms = {
-    "Sala Sypialniana": {
-        "description": "Jesteś w dużym pomieszczeniu z wysokim sufitem, z niewielkich okien dociera mocne światło spotęgowane śniegiem znajdującym się na dworze. Widzisz wiele twardych łóżek, stolik, oraz leżący na twoim notatnik. Na wschodzie znajdują się drzwi prowadzące do głównego holu",
-        "objects": ["lozko","kartka"],
-        "east": "Hol"
-    },
-    "Hol": {
-        "description": "Stoisz w głównym holu, czujesz mróz. Widzisz nierozpalony kominek, zachodnie drzwi prowadzące do sali sypialnianej, połnocne drzwi prowadzące do biblioteki, wschodnie drzwi prowadzące do jadali, oraz wielkie drzwi na południu prowadzące na zewnątrz",
-        "objects": ["kominek"],
-        "west": "Sala Sypialniana",
-        "north": "Biblioteka",
-        "east": "Jadalnia",
-        "south": "Dwor"
-    },
-    "Biblioteka":{
-        "description": "Jesteś w bibliotece. Widzisz wiele regałów z książkami, biurko z krzesłem, oraz drzwi prowadzące do głównego holu",
-        "objects": ["regaly"],
-        "south": "Hol"
-    },
-    "Jadalnia": {
-        "description": "Jesteś w jadalni. Widzisz długi stół, kilka krzeseł, oraz drzwi prowadzące do głównego holu",
-        "objects": ["stol"],
-        "west": "Hol"
-    },
-    "Dwor": {
-        "description": "Jesteś na dziedzińcu. Widzisz fontannę, ławkę, kukłę treningową oraz drzwi prowadzące do korytarza...",
-        "objects": ["kukla treningowa"],
-        "items_available": ["drewno"],
-        #"characters": [""],
-        "north": "Hol",
-        "exit": "(0,0)"
-    },
-    #----Miasteczko----
-    "Brama Miasteczka": {
-        "description": "Wchodzisz do tętniącego życiem miasta. Widzisz kupców, rzemieślników, oraz mieszkańców. Możesz porozmawiać z kupcami, lub udać się na rynek.",
-        "exit": "(-2,2)"
-    },
-
-    #----MAPA ŚWIATA----
-    "(0,0)": {
-        "description": "Stoisz przed ogromną, ponurą wieżą. Rozciąga się stąd widok na mroźne pustkowia. Możesz wejść z powrotem do wieży wpisując 'wejdź'.",
-        "enter": "Dwor", # Powrót do wieży
-        "north": "(0,1)",
-        "south": "(0,-1)",
-        "east": "(1,0)",
-        "west": "(-1,0)"
-
-    },
     
-    "(2,2)": {
-        "description": "Dotarłeś do bram spokojnego Miasteczka. Słyszysz rzadkie rozmowy, posępne rozmowy kupców.",
-        "enter": "Brama Miasteczka", # Przenosi do kolejnego zamkniętego "lochu"
-        "north": "(2,3)",
-        "south": "(2,1)",
-        "east": "(1,2)",
-        "west": "(3,2)"
-    }
-    }
-    for x in range(-3, 4):
-        for y in range(-3, 4):
-            # Formatowanie ID pokoju dokładnie tak jak Twoje klucze (ze spacją)
-            room_id = f"({x},{y})"
-
-            # Jeśli pokoju o takich współrzędnych jeszcze NIE MA w słowniku, tworzymy pustkowie
-            if room_id not in rooms:
-                rooms[room_id] = {
-                    "description": f"Przemierzasz zaśnieżone, puste pustkowia. Wiatr sypie ci śniegiem w oczy. (Współrzędne: {x}, {y})"
-                }
-
-            # Automatyczne dodawanie kierunków. 
-            # Zapisujemy je do obecnego pokoju, niezależnie czy to wygenerowane pustkowie, czy unikalna lokacja jak (0, 0)
-            if y < 3: rooms[room_id]["north"] = f"({x},{y+1})"
-            if y > -3: rooms[room_id]["south"] = f"({x},{y-1})"
-            if x < 3: rooms[room_id]["east"] = f"({x+1},{y})"
-            if x > -3: rooms[room_id]["west"] = f"({x-1},{y})"
     os.system("cls")
     wypisz("Gwałtownie budzisz się na niewygodnym materacu w jasnym pomieszczeniu. Jesteś w południowej wieży w Thalindorze. Czujesz jedynie mróz i wilgoć. Widzisz przed sobą drzwi, które prowadzą na korytarz. Sen który miałeś wydawał się tak realny, że nie jesteś jeszcze pewien, czy to był tylko sen. Nie pamiętasz z niego praktycznie nic, ale również nie pamiętasz po co tutaj jesteś")
     while True:
+        if player.expierience >= player.expto_next_level:
+            player.level += 1
+            player.experience -= player.expto_next_level
+            player.expto_next_level = int(player.expto_next_level * 1.5)
+            player.max_hp += 20
+            
+            wypisz(f"Gratulacje! Awansowałeś na poziom {player.level}! Wybierz statystyke do ulepszenia:", kolor="GREEN")
+            wypisz("1. Siła", slowo_bold="1.")
+            wypisz("2. Zręczność", slowo_bold="2.")
+            wypisz("3. Inteligencja", slowo_bold="3.")
+            choice = input("> ").strip()
+            if choice == "1":
+                player.strength += 5
+                player.max_hp += 10
+            elif choice == "2":
+                player.dexterity += 5
+            elif choice == "3":
+                player.intelligence += 5
+                player.max_energy += 10
+            player.energy = player.max_energy
+            player.hp = player.max_hp
+        for i in quests:
+            if quests[i]["active"]=="True" and quests[i]["completed"]==True:
+                if quests[i]["items"]!="":
+                    wypisz(f"Zadanie '{quests[i]['name']}' zostało ukończone! Otrzymujesz {quests[i]['exp']} doświadczenia oraz {quests[i]['items']}!", kolor="GREEN")
+                    player.inventory.append(quests[i]["items"])
+                else:
+                    wypisz(f"Zadanie '{quests[i]['name']}' zostało ukończone! Otrzymujesz {quests[i]['exp']} doświadczenia!", kolor="GREEN")
+                quests[i]["active"]="False"
+        if currentRoom == "(0,0)":
+            wieza()
         if palisie:
             rooms["Hol"]["description"] = "Stoisz w głównym holu, czujesz ciepło. Widzisz rozpalony kominek, zachodnie drzwi prowadzące do sali sypialnianej, połnocne drzwi prowadzące do biblioteki, wschodnie drzwi prowadzące do jadali, oraz wielkie drzwi na południu prowadzące na zewnątrz"
             if tob_location=="hol":
@@ -198,6 +156,9 @@ def main(player):
                     else:
                         wypisz("Tob: Musimy zająć szykowaniem się wieży. Nie wiem, co się dzieje, ale coś jest nie tak, skoro nas tu wysłali. Podobno szykuje się jakaś duża bitwa. Zacznij od posprzątania jadalni. Muszę jeszcze trochę odpocząć, więc wróć do mnie jak skończysz.", kolor="LIGHT_CYAN", slowo_bold="Tob")
                         tob1=True
+                elif argument == "smutna kobieta" and currentRoom == "Targ":
+                    wypisz("Smutna kobieta: Witaj. Jeżeli przyszedłeś tu po drewno to muszę Cię zasmucić. Zamykamy biznes. Mój mąź zaginął, a to on dostarczał mi drewno. Nie mam z nim żadnego kontaktu od tygodnia. Nikt nie chce mi pomóc, sprawdzić co się stało, a nie mogę pójść sama ponieważ w pobliżu krążą bandyci. Proszę pójdź ze mną do naszego tartaku, który znajduje się na południe od miasta")
+                    quests["Drwal"]["active"] = True
                 else:
                     wypisz(f"Nie rozmawiać z {argument}.", slowo_kolor={argument: "RED"})
             else:

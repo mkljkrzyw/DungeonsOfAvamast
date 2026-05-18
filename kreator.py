@@ -32,8 +32,10 @@ def zapytaj_tak_nie(komunikat, niepoprawny="Proszę wpisać 'tak' lub 'nie'.", *
 
 def wybierz_imie_gracza():
     while True:
-        wypisz("Podaj imię swojego bohatera:", kolor="CYAN")
+        wypisz("Podaj imię swojego bohatera: (Podstawowo imie to Grol)", kolor="CYAN")
         player_name = input("> ").strip()
+        if player_name == "":
+            player_name = "Grol"
         wyczysc_ekran()
 
         potwierdzenie = zapytaj_tak_nie(

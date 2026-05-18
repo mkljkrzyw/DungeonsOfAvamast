@@ -7,6 +7,7 @@ class Player:
         self.gold = 50
         self.level = 1
         self.experience = 0
+        self.expto_next_level = 100
         self.strength = strength
         self.dexterity = dexterity
         self.intelligence = intelligence
@@ -32,13 +33,13 @@ class Player:
     def show_stats(self):
         print(f"\n--- STATYSTYKI: {self.name} ---")
         print(f"Poziom: {self.level}")
-        print(f"Doświadczenie: {self.experience}")
+        print(f"Doświadczenie: {self.experience}/{self.expto_next_level}")
         print(f"Zdrowie: {self.hp}/{self.max_hp}")
         print(f"Energia: {self.energy}/{self.max_energy}")
         print(f"Złoto: {self.gold} monet")
-        print(f"Siła: {self.strength}")
-        print(f"Zręczność: {self.dexterity}")
-        print(f"Inteligencja: {self.intelligence}")
+        print(f"Siła: {self.strength} - zwiększa wytrzytrzymałość i życie")
+        print(f"Zręczność: {self.dexterity} - zwiększa szanse na unikanie")
+        print(f"Inteligencja: {self.intelligence} - zwiększa energię")
         print(f"Błogosławieństwo: {self.blessing}")
         print(f"bron: {self.weapon.name if self.weapon else 'Brak'}")
         print(f"Obrazenia: {self.currentdmg}")
