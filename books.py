@@ -26,7 +26,7 @@ def bestie():
                 wypisz("WYGLĄD: \n"+rapax().visual+"\n")
                 wypisz("ZACHOWANIE: \n"+rapax().behavior+"\n")
                 wypisz("KLASYFIKACJA: \n"+rapax().clasification+"\n")
-                wypisz("SZKIC: \n"+rapax().image+"\n")
+                wypisz("SZKIC: \n"+rapax().image+"\n", opoznienie=0.001)
                 wypisz("Naciśnij Enter, aby wrócić do poprzedniego menu.")
                 input()
                 os.system("cls")

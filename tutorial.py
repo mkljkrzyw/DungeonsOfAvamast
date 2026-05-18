@@ -22,6 +22,7 @@ def tutorial(player):
     },
     "Korytarz": {
         "description": "Stoisz na korytarzu. Widzisz drzwi prowadzące do sypialni oraz drzwi prowadzące na dziedziniec",
+        "characters": ["Soren"],
         "east": "Sypialnia",
         "north": "dziedziniec"
     },
@@ -38,7 +39,7 @@ def tutorial(player):
     wypisz("Na początku każdego pomieszczenia, zostanie wyświetlony jego opis oraz dostępne kierunki, w które możesz się udać. Aby poruszać się, użyj komendy 'go' wraz z kierunkiem, np. 'go north'.", slowo_kolor={"go": "GREEN"})
     wypisz("Aby wchodzić w interakcje z przedmiotami, użyj komendy 'use' wraz z nazwą przedmiotu, np. 'use skrzynia'.", slowo_kolor={"use": "GREEN"})
     wypisz("Możesz również sprawdzić swój ekwipunek za pomocą komendy 'inventory' oraz swoje statystyki za pomocą komendy 'stats'.", slowo_kolor={"inventory": "YELLOW", "stats": "YELLOW"})
-    wypisz("W niektórych pomieszczeniach znajdują się postacie z którymi możesz porozmawiać, używając komendy 'talk' wraz z imieniem postaci, np. 'talk Tob'.", slowo_kolor={"talk": "GREEN"})
+    wypisz("W niektórych pomieszczeniach znajdują się postacie z którymi możesz porozmawiać, używając komendy 'talk' wraz z imieniem postaci, np. 'talk Soren'.", slowo_kolor={"talk": "GREEN"})
     wypisz("Jeżeli zdobędziesz jakąś broń lub zbroję, możesz ją wyposażyć używając komendy 'use' wraz z nazwą przedmiotu, np. 'use sztylet'.", slowo_kolor={"use": "GREEN", "sztylet": "YELLOW"})
     wypisz("Jeżeli będziesz potrzebować pomocy, zawsze możesz wpisać 'help', aby wyświetlić listę dostępnych komend.", slowo_kolor={"help": "CYAN"})
     wypisz("Teraz, gdy znasz już podstawy, czas rozpocząć swoją przygodę w Dungeons of Avamast! Powodzenia!", kolor="CYAN", styl="BOLD")
@@ -57,6 +58,8 @@ def tutorial(player):
             wypisz(f"\nObiekty: {', '.join(rooms[currentRoom]['objects'])}", slowo_bold=rooms[currentRoom]["objects"], slowo_kolor={obj: "YELLOW" for obj in rooms[currentRoom]["objects"]})
         if "items_available" in rooms[currentRoom] and rooms[currentRoom]["items_available"]:
             wypisz(f"Przedmioty do podniesienia: {', '.join(rooms[currentRoom]['items_available'])}", slowo_bold=rooms[currentRoom]["items_available"], slowo_kolor={item: "YELLOW" for item in rooms[currentRoom]["items_available"]})
+        if rooms[currentRoom].get("characters"):
+            wypisz(f"Postacie: {', '.join(rooms[currentRoom]['characters'])}", slowo_bold=rooms[currentRoom]["characters"], slowo_kolor={char: "YELLOW" for char in rooms[currentRoom]["characters"]})
         wypisz(f"Dostępne kierunki: {', '.join(avaiable_directions)}", slowo_bold=avaiable_directions, slowo_kolor={dir: 'GREEN' for dir in avaiable_directions})
         turn = input("> ").strip()
         while turn=="":
@@ -109,8 +112,6 @@ def tutorial(player):
                 if argument == "piwo":
                     piwo(player)
                     player.inventory.remove(argument)
-                elif argument == "bestiariusz":
-                    bestiariusz()
                 elif argument in bronie:
                     wybrana_bron = bronie[argument]()
                     wypisz("Ta broń to " + wybrana_bron.name + ". Jej główną cechą jest " + wybrana_bron.main_stat + ".", slowo_kolor={argument: "YELLOW"})
@@ -136,6 +137,16 @@ def tutorial(player):
                     wypisz(f"Używasz {argument} z ekwipunku, ale nic się nie dzieje.", slowo_kolor={argument: "YELLOW"})
             else:
                 wypisz(f"Nie ma tutaj, ani w twoim ekwipunku {argument}.", slowo_kolor={argument: "RED"})
+        elif komenda == "talk":
+            if not argument:
+                wypisz("Podaj postać do rozmowy, np. 'talk Soren'.", slowo_kolor={"talk": "GREEN"})
+            elif "characters" in rooms[currentRoom] and argument in rooms[currentRoom]["characters"]:
+                if argument == "soren":
+                    wypisz("Soren: Jak to z Tobą skończy, to zajme się Twoim ciałem", kolor="LIGHT_CYAN", slowo_bold="Soren")
+                else:
+                    wypisz(f"Rozmawiasz z {argument}, ale nie ma nic ciekawego do powiedzenia.", slowo_kolor={argument: "YELLOW"})
+            else:
+                wypisz(f"Nie ma tutaj postaci {argument}.", slowo_kolor={argument: "RED"})
         elif komenda == "get":
             if not argument:
                 wypisz("Podaj obiekt do użycia, np. 'get piwo'.", slowo_kolor={"use": "YELLOW"})
