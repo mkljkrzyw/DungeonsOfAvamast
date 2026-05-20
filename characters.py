@@ -6,7 +6,7 @@ class Player:
         self.max_hp = 100
         self.gold = 50
         self.level = 1
-        self.experience = 0
+        self.exp = 0
         self.expto_next_level = 100
         self.strength = strength
         self.dexterity = dexterity
@@ -33,7 +33,7 @@ class Player:
     def show_stats(self):
         print(f"\n--- STATYSTYKI: {self.name} ---")
         print(f"Poziom: {self.level}")
-        print(f"Doświadczenie: {self.experience}/{self.expto_next_level}")
+        print(f"Doświadczenie: {self.exp}/{self.expto_next_level}")
         print(f"Zdrowie: {self.hp}/{self.max_hp}")
         print(f"Energia: {self.energy}/{self.max_energy}")
         print(f"Złoto: {self.gold} monet")

@@ -18,6 +18,7 @@ class kukla_treningowa:
     damage = 0
     defense = 10
     currentdefense=defense
+    exp=0
 class test:
     name = "Test"
     hp = 100
@@ -28,6 +29,7 @@ class test:
     damage = 10
     defense = 10
     currentdefense=defense
+    exp=0
 class dopler:
     name="Potwór przypominający smutną kobietę"
     hp=50
@@ -38,3 +40,4 @@ class dopler:
     damage = 5
     defense = 5
     currentdefense=defense
+    exp=30

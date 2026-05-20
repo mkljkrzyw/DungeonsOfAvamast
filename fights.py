@@ -194,3 +194,8 @@ def walka(player, przeciwnik):
         
     else:        
         print("Wygrałeś walkę!")
+        player.exp += przeciwnik.exp
+        wypisz(f"Otrzymujesz {przeciwnik.exp} doświadczenia!", slowo_kolor={f"{przeciwnik.exp} doświadczenia!": "GREEN"})
+        wypisz("Naciśnij Enter, aby kontynuować...")
+        input()
+        

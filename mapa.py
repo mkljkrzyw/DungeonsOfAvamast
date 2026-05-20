@@ -2,8 +2,9 @@ directions=["north", "south", "east", "west", "enter", "exit"]
 avaiable_directions = []
 rooms = {
 "Sala Sypialniana": {
-    "description": "Jesteś w dużym pomieszczeniu z wysokim sufitem, z niewielkich okien dociera mocne światło spotęgowane śniegiem znajdującym się na dworze. Widzisz wiele twardych łóżek, stolik, oraz leżący na twoim notatnik. Na wschodzie znajdują się drzwi prowadzące do głównego holu",
+    "description": "Jesteś w dużym pomieszczeniu z wysokim sufitem, z niewielkich okien dociera mocne światło spotęgowane śniegiem znajdującym się na dworze. Widzisz wiele twardych łóżek, stolik, oraz leżący na nim dziennik. Na wschodzie znajdują się drzwi prowadzące do głównego holu",
     "objects": ["lozko","kartka"],
+    "items_available": ["dziennik"],
     "east": "Hol"
 },
 "Hol": {
@@ -17,11 +18,12 @@ rooms = {
 "Biblioteka":{
     "description": "Jesteś w bibliotece. Widzisz wiele regałów z książkami, biurko z krzesłem, oraz drzwi prowadzące do głównego holu",
     "objects": ["regaly"],
+    "items_available":["miotla"],
     "south": "Hol"
 },
 "Jadalnia": {
     "description": "Jesteś w jadalni. Widzisz długi stół, kilka krzeseł, oraz drzwi prowadzące do głównego holu",
-    "objects": ["stol"],
+    "objects": ["stoly","podloga"],
     "west": "Hol"
 },
 "Dwor": {
@@ -29,8 +31,15 @@ rooms = {
     "objects": ["kukla treningowa"],
     "items_available": ["drewno"],
     #"characters": [""],
+    "east":"Zbrojownia",
     "north": "Hol",
     "exit": "(0,0)"
+},
+"Zbrojownia":{
+    "description":"Jesteś w przestronnej zbrojowni. Niestety oprócz jedną zbroją i skrzynią nie ma tu żadnego sprzętu. Domyślasz się, że tym pewnie też będziesz musiał się zająć. Na zachodzie znajdują się drzwi prowadzące na zewnątrz",
+    "objects":["skrzynia"],
+    "items_avaiable":["ochraniacze","wielki mlot"],
+    "west":"Dwor"
 },
 #----Miasteczko----
 "Brama Miasteczka": {
@@ -79,6 +88,10 @@ rooms = {
     "south": "(2,1)",
     "east": "(1,2)",
     "west": "(3,2)"
+},
+"(2,-1)": {
+    "description": "Widzisz mały tartak, pośrodku drzew, czujesz mocny smród zgnilizny dochodzący z szopy.",
+    "objects": ["szopa"],
 }
 }
 for x in range(-3, 4):
