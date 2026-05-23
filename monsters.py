@@ -41,3 +41,4 @@ class dopler:
     defense = 5
     currentdefense=defense
     exp=30
+    gold=20

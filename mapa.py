@@ -3,13 +3,13 @@ avaiable_directions = []
 rooms = {
 "Sala Sypialniana": {
     "description": "Jesteś w dużym pomieszczeniu z wysokim sufitem, z niewielkich okien dociera mocne światło spotęgowane śniegiem znajdującym się na dworze. Widzisz wiele twardych łóżek, stolik, oraz leżący na nim dziennik. Na wschodzie znajdują się drzwi prowadzące do głównego holu",
-    "objects": ["lozko","kartka"],
-    "items_available": ["dziennik"],
+    "objects": ["lozko","kartka"], #lozko - heal, kartka - informacja o quescie 
+    "items_available": ["dziennik"], #wypisane questy
     "east": "Hol"
 },
 "Hol": {
     "description": "Stoisz w głównym holu, czujesz mróz. Widzisz nierozpalony kominek, zachodnie drzwi prowadzące do sali sypialnianej, połnocne drzwi prowadzące do biblioteki, wschodnie drzwi prowadzące do jadali, oraz wielkie drzwi na południu prowadzące na zewnątrz",
-    "objects": ["kominek"],
+    "objects": ["kominek"],#pierwszy quest
     "west": "Sala Sypialniana",
     "north": "Biblioteka",
     "east": "Jadalnia",
@@ -17,19 +17,19 @@ rooms = {
 },
 "Biblioteka":{
     "description": "Jesteś w bibliotece. Widzisz wiele regałów z książkami, biurko z krzesłem, oraz drzwi prowadzące do głównego holu",
-    "objects": ["regaly"],
-    "items_available":["miotla"],
+    "objects": ["regaly"],#ksiazki
+    "items_available":["miotla"],#do questa w jadalni
     "south": "Hol"
 },
 "Jadalnia": {
     "description": "Jesteś w jadalni. Widzisz długi stół, kilka krzeseł, oraz drzwi prowadzące do głównego holu",
-    "objects": ["stoly","podloga"],
+    "objects": ["stoly","podloga"],#quest z miotłą
     "west": "Hol"
 },
 "Dwor": {
     "description": "Jesteś na dziedzińcu. Widzisz fontannę, ławkę, kukłę treningową oraz drzwi prowadzące do korytarza...",
-    "objects": ["kukla treningowa"],
-    "items_available": ["drewno"],
+    "objects": ["kukla treningowa"],#classic
+    "items_available": ["drewno"],#pierwszy quest
     #"characters": [""],
     "east":"Zbrojownia",
     "north": "Hol",
@@ -37,8 +37,8 @@ rooms = {
 },
 "Zbrojownia":{
     "description":"Jesteś w przestronnej zbrojowni. Niestety oprócz jedną zbroją i skrzynią nie ma tu żadnego sprzętu. Domyślasz się, że tym pewnie też będziesz musiał się zająć. Na zachodzie znajdują się drzwi prowadzące na zewnątrz",
-    "objects":["skrzynia"],
-    "items_avaiable":["ochraniacze","wielki mlot"],
+    "objects":["skrzynia","stojaki"],#po jadalni darmowa bronka
+    "items_avaiable":["ochraniacze","wielki mlot"], #ochraniacze - wiekszy def; mlot - dla manipulacji ciezarem
     "west":"Dwor"
 },
 #----Miasteczko----
@@ -52,23 +52,25 @@ rooms = {
 },
 "Sklep Kowala": {
     "description": "Jesteś w sklepie kowala. Widzisz kilka narzędzi, kuźnię, oraz drzwi prowadzące do bramy miasteczka",
-    "objects": ["narzedzia"],
+    #"objects": ["narzedzia"],
+    "characters":["Kowal"],
     "south": "Brama Miasteczka"
 },
 "Karczma": {
     "description": "Jesteś w karczmie. Widzisz kilka stolików, bar, oraz drzwi prowadzące do bramy miasteczka",
-    "objects": ["bar"],
+    "objects": ["alkierz"],
+    "characters":["dany"],
     "north": "Brama Miasteczka"
 },
 "Targ": {
     "description": "Jesteś na targu. Widzisz kilka straganów, smutną kobietę na przy pustym stoisku z resztkami drewna, oraz drzwi prowadzące do bramy miasteczka",
-    "objects": ["stragany"],
-    "characters": ["smutna kobieta"],
+    "objects": ["stragany"], 
+    "characters": ["smutna kobieta","Farmer","Szarlatan"], #quest z drwalem
     "west": "Brama Miasteczka"
 },
 "Ratusz": {
     "description": "Jesteś w ratuszu. Widzisz kilka biurek, oraz drzwi prowadzące do bramy miasteczka",
-    "objects": ["biurka"],
+    #"objects": ["biurka"],
     "east": "Brama Miasteczka"
 },
 #----MAPA ŚWIATA----
@@ -91,7 +93,10 @@ rooms = {
 },
 "(2,-1)": {
     "description": "Widzisz mały tartak, pośrodku drzew, czujesz mocny smród zgnilizny dochodzący z szopy.",
-    "objects": ["szopa"],
+    "objects": ["szopa"], #quest z drwalem
+},
+"(-3,3)":{
+    "description":"Wszedłeś w teren burzy, masz ograniczone pole widzenia i czujesz się słabo. Przytłacza Cię potęga burzy i wiesz że musisz uciekać jeśli chcesz przeżyć"
 }
 }
 for x in range(-3, 4):
