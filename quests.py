@@ -19,7 +19,7 @@ quests={
     "Zbrojownia":{#3.Fabularny quest
         "name":"Uzupełnienie zbrojowni",
         "description":"Zarób pieniądze i kup bronie u kowala w miasteczku",
-        "active":True,
+        "active":False,
         "completed":False,
         "exp":100
     },

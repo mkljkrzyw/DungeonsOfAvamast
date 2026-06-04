@@ -1,19 +1,43 @@
-# ⚔️ DungeonsOfAvamast - Text-Based RPG Engine (Core Foundation) 
+# ⚔️ DungeonsOfAvamast — silnik tekstowego RPG (MVP)
 
-To jest projekt autorskiego silnika RPG napisanego w Pythonie. Obecnie projekt znajduje się w fazie **MVP (Minimum Viable Product)** i zawiera grywalny moduł samouczka, który prezentuje główne mechaniki gry.
+Projekt to autorski silnik RPG w Pythonie. W tej chwili projekt jest w stanie MVP i zawiera grywalny samouczek oraz podstawowe mechaniki rozgrywki.
 
-## 🏗️ Obecny Stan Projektu (Core Features)
-- **Engine Logic:** Podstawowa pętla gry (Game Loop) zarządzająca stanem gracza.
-- **Tutorial Module:** Interaktywne wprowadzenie do mechanik świata i sterowania.
-- **Input System:** Obsługa i walidacja komend użytkownika.
-- **Modular Architecture:** Kod podzielony na klasy (OOP), co pozwala na łatwe dodawanie nowych lokacji, przedmiotów i przeciwników bez przebudowy całego systemu.
+**Główne cechy (aktualny stan)**
+- Grywalny samouczek: interaktywne wprowadzenie do mechanik i sterowania (`tutorial.py`).
+- Podstawowa pętla gry i system menu (`start.py`, `main.py`).
+- System tworzenia postaci i wyświetlania statystyk (`kreator.py`, `characters.py`).
+- Prosty system walki i testowe potwory (`fights.py`, `monsters.py`).
+- Moduły przedmiotów i broni (`items.py`, `weapons.py`).
+- Mapy i lokacje w rozwoju (`mapa.py`, `lokacjewiz.py`).
 
-## 🛠️ Stack Techniczny
-- **Język:** Python 3.12
-- **Paradygmat:** Programowanie Obiektowe (OOP) – nacisk na czysty i czytelny kod.
+**Techniczne wymagania**
+- Python 3.12 (zalecane).
+- Virtual environment (opcjonalnie, ale rekomendowane).
 
-## 🚀 Roadmap: Co dalej? (Wizja Rozwoju)
-1. **System Statystyk i Walki:** Wprowadzenie algorytmów obliczających obrażenia na podstawie atrybutów.
-2. **Data-Driven Content:** Przeniesienie opisów świata i statystyk do zewnętrznych plików JSON/YAML (łatwiejsza edycja).
-3. **AI Integration (Cel Główny):** Wykorzystanie modeli LLM (np. przez API OpenAI) do generowania unikalnych dialogów i opisów otoczenia, aby każda rozgrywka była inna.
-4. **Proceduralne Wydarzenia:** Skrypty generujące losowe spotkania na mapie świata.
+**Szybki start (Windows PowerShell)**
+```
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python start.py
+```
+
+Alternatywnie uruchom `python main.py` z aktywowanym środowiskiem, ale domyślnym punktem startowym jest `start.py`.
+
+**Pliki warte uwagi**
+- `start.py` — główne uruchomienie gry i wybór pominięcia samouczka.
+- `main.py` — główna pętla gry i logika po samouczku.
+- `tutorial.py` — moduł samouczka.
+- `kreator.py` / `characters.py` — tworzenie postaci i statystyki.
+- `fights.py` / `monsters.py` — system walki i przykładowe potwory.
+- `items.py` / `weapons.py` — ekwipunek i bronie.
+
+**Jak rozwijać projekt**
+- Dodać trwały system zapisu/ładowania stanu gry (serialization).
+- Rozbudować system statystyk i obliczania obrażeń.
+- Przenieść zawartość gry do plików danych (JSON/YAML) dla łatwej edycji.
+- Dalsze prace nad mapami, zagadkami i contentem.
+
+Jeśli chcesz, mogę: uruchomić prosty test, dodać `requirements.txt`, albo przygotować szablon JSON do definiowania potworów i przedmiotów.
+
+---
+_Plik zaktualizowany automatycznie aby odzwierciedlać bieżący stan projektu._

@@ -21,7 +21,7 @@ def main(player):
     stolyust=False
     podlogac=False
     # currentRoom = "Sala Sypialniana"
-    currentRoom="Brama Miasteczka"
+    currentRoom="Sala Sypialniana"
     os.system("cls")
     wypisz("Gwałtownie budzisz się na niewygodnym materacu w jasnym pomieszczeniu. Jesteś w południowej wieży w Thalindorze. Czujesz jedynie mróz i wilgoć. Widzisz przed sobą drzwi, które prowadzą na korytarz. Sen który miałeś wydawał się tak realny, że nie jesteś jeszcze pewien, czy to był tylko sen. Nie pamiętasz z niego praktycznie nic, ale również nie pamiętasz po co tutaj jesteś")
     while True:
@@ -131,11 +131,6 @@ def main(player):
                         elif choice==2:
                             wypisz("Może innym razem")
                             continue
-                elif argument == "dziennik":
-                    if "dziennik" in player.inventory:
-                        dziennik()
-                    else:
-                        wypisz("Podnieś dziennik z sali sypialnianej")
                 elif argument == "szopa" and currentRoom == "(2,-1)":
                     if quests["Drwal"]["active"] and not quests["Drwal"]["completed"]:
                         wypisz("Wchodzisz do szopy i znajdujesz tam ciało zaginionego drwala...")
@@ -261,6 +256,8 @@ def main(player):
                 elif argument=="ochraniacze":
                     wypisz("Nakładasz ochraniacze, które zwiększają twoją obronę o 10 punktów")
                     player.defense += 10
+                elif argument == "dziennik":
+                        dziennik()
                 else:
                     wypisz(f"Używasz {argument} z ekwipunku, ale nic się nie dzieje.", slowo_kolor={argument: "YELLOW"})
 #---------------------------KOMENDA GO---------------------------
