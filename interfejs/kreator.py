@@ -1,7 +1,7 @@
 import os
 
-from characters import Player
-from ui import wypisz
+from postacie.characters import Player
+from interfejs.ui import wypisz
 
 STATS_PRESETY = {
     "1": (15, 5, 5),

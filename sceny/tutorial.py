@@ -1,10 +1,10 @@
 import os
-from ui import wypisz, help, bestiariusz
-from monsters import kukla_treningowa, rapax
-from fights import walka
-from main import main
-from items import piwo
-from weapons import prosty_sztylet
+from interfejs.ui import wypisz, help, bestiariusz
+from postacie.monsters import kukla_treningowa, rapax
+from walki.fights import walka
+from sceny.main import main
+from przedmioty.items import piwo
+from przedmioty.weapons import prosty_sztylet
 
 os.system("cls")
 

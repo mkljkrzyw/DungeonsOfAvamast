@@ -1,4 +1,4 @@
-from ui import wypisz
+from interfejs.ui import wypisz
 
 def wieza():
     wypisz('''

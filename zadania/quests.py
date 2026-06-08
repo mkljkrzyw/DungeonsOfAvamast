@@ -1,4 +1,4 @@
-from ui import wypisz
+from interfejs.ui import wypisz
 quests={
     #------FABUŁKA-----
     "Kominek":{ #1.Fabularny quest
@@ -56,7 +56,7 @@ def dziennik():
     wypisz("Dziennik zadań:")
     for quest in quests:
         if quests[quest]["active"] and not quests[quest]["completed"]:
-            wypisz(f"- {quests[quest]["name"]}: {quests[quest]["description"]}")
+            wypisz(f"- {quests[quest]['name']}: {quests[quest]['description']}")
     wypisz("--------------")
     for quest in quests:
         if quests[quest]["completed"]:

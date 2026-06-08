@@ -4,7 +4,7 @@ import os
 import time
 import colorama
 
-from monsters import rapax
+from postacie.monsters import rapax
 
 try:
     import msvcrt

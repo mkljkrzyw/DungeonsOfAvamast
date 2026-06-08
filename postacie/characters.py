@@ -1,4 +1,4 @@
-from weapons import *
+from przedmioty.weapons import *
 class Player:
     def __init__(self, name, strength, dexterity, intelligence, blessing):
         self.name = name

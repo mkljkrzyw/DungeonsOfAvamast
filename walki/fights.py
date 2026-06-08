@@ -1,9 +1,9 @@
 import os
 import random
-import blogoslawienstwa
-from blogoslawienstwa import krew, oczy, ciezar
-from ui import wypisz, bestiariusz
-from items import *
+from przedmioty import blogoslawienstwa
+from przedmioty.blogoslawienstwa import krew, oczy, ciezar
+from interfejs.ui import wypisz, bestiariusz
+from przedmioty.items import *
 os.system("cls")
 turagracz=""
 turapotwora=""

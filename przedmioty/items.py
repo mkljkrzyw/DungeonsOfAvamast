@@ -1,5 +1,5 @@
-from characters import Player
-from ui import wypisz
+from postacie.characters import Player
+from interfejs.ui import wypisz
 def piwo(Player):
     wypisz("Pijesz piwo i czujesz się odświeżony.")
     if Player.hp + 5 > Player.max_hp:

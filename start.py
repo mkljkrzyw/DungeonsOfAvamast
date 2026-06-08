@@ -1,10 +1,10 @@
-from characters import Player
-from kreator import zapytaj_tak_nie, utworz_postac, wyczysc_ekran
-from tutorial import tutorial
-from ui import wypisz
-from main import main
-from fights import walka
-from monsters import test
+from postacie.characters import Player
+from interfejs.kreator import zapytaj_tak_nie, utworz_postac, wyczysc_ekran
+from sceny.tutorial import tutorial
+from interfejs.ui import wypisz
+from sceny.main import main
+from walki.fights import walka
+from postacie.monsters import test
 
 def uruchom_gre():
     wyczysc_ekran()

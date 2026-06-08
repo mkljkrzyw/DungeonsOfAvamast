@@ -1,6 +1,6 @@
-from monsters import rapax
-from ui import wypisz
-from bestiariusz import *
+from postacie.monsters import rapax
+from interfejs.ui import wypisz
+from wiedza.bestiariusz import *
 import os
 def azurith():
     wypisz('''
