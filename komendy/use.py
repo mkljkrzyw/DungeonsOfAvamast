@@ -14,6 +14,7 @@ def handle_use(player, currentRoom, rooms, quests, argument, palisie, tob1, stol
     bronie = {
         "prosta wlocznia": prosta_wlocznia,
         "prosty miecz dwureczny": prosty_miecz_dwureczny,
+        "krotki miecz": krotki_miecz,
     }
 
     if not argument:
@@ -123,11 +124,29 @@ def handle_use(player, currentRoom, rooms, quests, argument, palisie, tob1, stol
                     wypisz("3. (Inteligencja)")
                     ch = input("> ").strip()
                     if ch == "1":
-                        player.inventory.append(prosty_miecz_dwureczny)
+                        os.system("cls")
+                        player.inventory.append("prosty miecz dwureczny")
+                        currentRoom.objects.remove("skrzynia")
+                        wypisz("Naciśnij Enter, żeby kontynuować")
+                        input()
+                        os.system("cls")
                     elif ch == "2":
-                        player.inventory.append(prosta_wlocznia)
+                        os.system("cls")
+                        wypisz("Dodajesz prosty miecz dwuręczny do swojego ekwipunku", slowo_kolor={"prosty miecz dwureczny": "YELLOW"})
+                        player.inventory.append("prosta wlocznia")
+                        currentRoom.objects.remove("skrzynia")
+                        wypisz("Dodajesz prosta wlocznia do swojego ekwipunku", slowo_kolor={"prosta wlocznia": "YELLOW"})
+                        wypisz("Naciśnij Enter, żeby kontynuować")
+                        input()
+                        os.system("cls")
                     elif ch == "3":
-                        player.inventory.append(krotki_miecz)
+                        os.system("cls")
+                        #player.inventory.append("krotki miecz")
+                        currentRoom.objects.remove("skrzynia")
+                        wypisz("Co za cwelxd")
+                        wypisz("Naciśnij Enter, żeby kontynuować")
+                        input()
+                        os.system("cls")
                 tob1 = True
             else:
                 wypisz("Próbujesz otworzyć skrzynię, ale nie dajesz rady. Jest zamknięta na klucz. Może Tob coś o tym wie", slowo_bold="Tob", slowo_kolor={"Tob": "YELLOW"})
@@ -180,7 +199,10 @@ def handle_use(player, currentRoom, rooms, quests, argument, palisie, tob1, stol
             player.defense += 10
         elif argument == "dziennik":
             dziennik()
+        elif argument == "mapa":
+            uzyj_mape(currentRoom)
         else:
             wypisz(f"Używasz {argument} z ekwipunku, ale nic się nie dzieje.", slowo_kolor={argument: "YELLOW"})
-
+    else:
+        wypisz(f"Nie możesz użyć '{argument}'. Nie ma takiego przedmiotu w tym pokoju ani w twoim ekwipunku.", slowo_kolor={argument: "RED"})
     return palisie, tob1, stolyust, podlogac

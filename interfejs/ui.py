@@ -124,6 +124,25 @@ def _znajdz_zakresy(tekst, fraza):
     return zakresy
 
 
+def opisz_przedmiot(przedmiot):
+    if isinstance(przedmiot, str):
+        return przedmiot
+
+    nazwa = getattr(przedmiot, "name", None)
+    if nazwa:
+        return str(nazwa)
+
+    if isinstance(przedmiot, type):
+        return przedmiot.__name__.replace("_", " ")
+
+    return str(przedmiot)
+
+
+def sformatuj_ekwipunek(ekwipunek):
+    przedmioty = [opisz_przedmiot(przedmiot) for przedmiot in ekwipunek if opisz_przedmiot(przedmiot)]
+    return ", ".join(przedmioty) if przedmioty else "pusty"
+
+
 def _czy_enter_nacisnienty():
     if msvcrt is None:
         return False

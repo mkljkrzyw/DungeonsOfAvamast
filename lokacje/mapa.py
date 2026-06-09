@@ -26,7 +26,7 @@ rooms = {
 "Biblioteka":{
     "description": "Jesteś w bibliotece. Widzisz wiele regałów z książkami, biurko z krzesłem, oraz drzwi prowadzące do głównego holu",
     "objects": ["regaly"],#ksiazki
-    "items_available":["miotla"],#do questa w jadalni
+    "items_available":["miotla","mapa"],#do questa w jadalni
     "south": "Hol"
 },
 "Jadalnia": {
@@ -123,6 +123,19 @@ for x in range(-3, 4):
         if x < 3: rooms[room_id]["east"] = f"({x+1},{y})"
         if x > -3: rooms[room_id]["west"] = f"({x-1},{y})"
 
+punkty_kluczowe = {
+    "(0,0)": "Wieża",
+    "(2,2)": "Miasteczko",
+    "(2,-1)": "Tartak",
+}
+
+# Tłumaczenie lokacji wewnętrznych na pozycję na świecie
+pozycja_na_swiecie = {
+    "Sala Sypialniana": (0,0), "Hol": (0,0), "Biblioteka": (0,0), 
+    "Jadalnia": (0,0), "Dwor": (0,0), "Zbrojownia": (0,0),
+    "Brama Miasteczka": (2,2), "Sklep Kowala": (2,2), 
+    "Karczma": (2,2), "Targ": (2,2), "Ratusz": (2,2)
+}
 def pokaz_minimape(obecny_pokoj, slownik_pokoi, odwiedzone):
     if obecny_pokoj.startswith("("):
         return
@@ -179,3 +192,38 @@ def pokaz_minimape(obecny_pokoj, slownik_pokoi, odwiedzone):
         
     # Kreska zamykająca mapę
     print("-" * (szerokosc_mapy-3) + "\n")
+
+
+def uzyj_mape(obecny_pokoj):
+    if obecny_pokoj in pozycja_na_swiecie:
+        gracz_x, gracz_y = pozycja_na_swiecie[obecny_pokoj]
+    else:
+        try:
+            czysty_tekst = obecny_pokoj.replace("(", "").replace(")", "")
+            gracz_x, gracz_y = map(int, czysty_tekst.split(","))
+        except:
+            print("Nie możesz tutaj użyć mapy.")
+            return
+
+    print("\n" + "=== ROZWIJASZ MAPĘ ŚWIATA ===".center(105))
+    print()
+
+    # Rysujemy macierz 7x7 (Y od 3 do -3; X od -3 do 3)
+    for y in range(3, -4, -1):
+        linia_mapy = ""
+        for x in range(-3, 4):
+            koordynaty_kafelka = f"({x},{y})"
+            
+            if x == gracz_x and y == gracz_y:
+                wyglad_kafelka = "[* TY *]"
+            elif koordynaty_kafelka in punkty_kluczowe:
+                wyglad_kafelka = f"[{punkty_kluczowe[koordynaty_kafelka]}]"
+            else:
+                wyglad_kafelka = f"[ {x},{y} ]"
+                
+            linia_mapy += wyglad_kafelka.center(15)
+            
+        print(linia_mapy)
+        print() 
+
+    print("=" * 105 + "\n")

@@ -2,7 +2,7 @@ import os
 import random
 from przedmioty import blogoslawienstwa
 from przedmioty.blogoslawienstwa import krew, oczy, ciezar
-from interfejs.ui import wypisz, bestiariusz
+from interfejs.ui import wypisz, bestiariusz, opisz_przedmiot
 from przedmioty.items import *
 os.system("cls")
 turagracz=""
@@ -107,7 +107,7 @@ def walka(player, przeciwnik):
             elif choice == "3":
                 print("Ekwipunek:")
                 for each, item in enumerate(player.inventory, 1):
-                    print(f"{each}. {item}")
+                    print(f"{each}. {opisz_przedmiot(item)}")
                 item_choice = input("Wybierz przedmiot do użycia (numer): ").strip()
                 for each, item in enumerate(player.inventory, 1):
                     if item_choice == str(each):

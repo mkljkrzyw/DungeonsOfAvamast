@@ -1,5 +1,5 @@
 import os
-from interfejs.ui import wypisz, help
+from interfejs.ui import wypisz, help, sformatuj_ekwipunek
 from lokacje.lokacjewiz import *
 from lokacje.mapa import *
 from zadania.quests import *
@@ -9,7 +9,7 @@ from komendy.talk import handle_talk
 from komendy.use import handle_use
 def main(player):
     player.hp=player.max_hp
-    player.inventory=[""]
+    player.inventory=[]
     player.weapon=krotki_miecz()
     player.energy=player.max_energy
     palisie=False
@@ -131,7 +131,7 @@ def main(player):
                 kowal1,
             )
         elif komenda == "inventory":
-            wypisz("Ekwipunek: " + str(player.inventory))
+            wypisz("Ekwipunek: " + sformatuj_ekwipunek(player.inventory))
         elif komenda == "stats":
             player.show_stats()
         elif komenda == "help":
