@@ -20,54 +20,14 @@ def main(player):
     stolyust=False
     podlogac=False
     # currentRoom = "Sala Sypialniana"
-    currentRoom="Sala Sypialniana"
+    # Lista lub zbiór odwiedzonych pokoi
+    visited_rooms = set()
+    # Na starcie dodajemy pokój, w którym gracz zaczyna
+    currentRoom = "Sala Sypialniana"
+    visited_rooms.add(currentRoom)
     os.system("cls")
-    wypisz("Gwałtownie budzisz się na niewygodnym materacu w jasnym pomieszczeniu. Jesteś w południowej wieży w Thalindorze. Czujesz jedynie mróz i wilgoć. Widzisz przed sobą drzwi, które prowadzą na korytarz. Sen który miałeś wydawał się tak realny, że nie jesteś jeszcze pewien, czy to był tylko sen. Nie pamiętasz z niego praktycznie nic, ale również nie pamiętasz po co tutaj jesteś")
+    wypisz("Gwałtownie wyskakujesz z niewygodnego materacu w jasnym pomieszczeniu. Jesteś w południowej wieży w Thalindorze. Czujesz jedynie mróz i wilgoć. Widzisz przed sobą drzwi, które prowadzą na korytarz. Sen który miałeś wydawał się tak realny, że nie jesteś jeszcze pewien, czy to był tylko sen. Nie pamiętasz z niego praktycznie nic, ale również nie pamiętasz po co tutaj jesteś")
     while True:
-        if player.exp >= player.expto_next_level:
-            player.level += 1
-            player.exp -= player.expto_next_level
-            player.expto_next_level = int(player.expto_next_level * 1.5)
-            player.max_hp += 20
-            
-            wypisz(f"Gratulacje! Awansowałeś na poziom {player.level}! Wybierz statystyke do ulepszenia:", kolor="GREEN")
-            wypisz("1. Siła", slowo_bold="1.")
-            wypisz("2. Zręczność", slowo_bold="2.")
-            wypisz("3. Inteligencja", slowo_bold="3.")
-            choice = input("> ").strip()
-            if choice == "1":
-                player.strength += 5
-                player.max_hp += 10
-            elif choice == "2":
-                player.dexterity += 5
-            elif choice == "3":
-                player.intelligence += 5
-                player.max_energy += 10
-            player.energy = player.max_energy
-            player.hp = player.max_hp
-        for quest_key, quest_data in quests.items():
-            if not isinstance(quest_data, dict):
-                continue
-            if quest_data.get("active") and quest_data.get("completed"):
-                exp_reward = int(quest_data.get("exp", 0))
-                item_reward = quest_data.get("items", "")
-                gold_reward=quest_data.get("gold",0)
-                player.exp += exp_reward
-                if gold_reward:
-                    player.gold += gold_reward
-                    if item_reward:
-                        wypisz(f"Zadanie '{quest_data.get('name', quest_key)}' zostało ukończone! Otrzymujesz {exp_reward} doświadczenia, {gold_reward} złota oraz {item_reward}!", kolor="GREEN")
-                        player.inventory.append(item_reward)
-                    else:
-                        wypisz(f"Zadanie '{quest_data.get('name', quest_key)}' zostało ukończone! Otrzymujesz {exp_reward} doświadczenia i {gold_reward} złota!", kolor="GREEN")
-                else:
-                    if item_reward:
-                        wypisz(f"Zadanie '{quest_data.get('name', quest_key)}' zostało ukończone! Otrzymujesz {exp_reward} doświadczenia oraz {item_reward}!", kolor="GREEN")
-                        player.inventory.append(item_reward)
-                    else:
-                        wypisz(f"Zadanie '{quest_data.get('name', quest_key)}' zostało ukończone! Otrzymujesz {exp_reward} doświadczenia", kolor="GREEN")
-
-                quest_data["active"] = False
         if currentRoom == "(0,0)":
             wieza()
         if palisie:
@@ -95,6 +55,7 @@ def main(player):
         if rooms[currentRoom].get("characters"):
             wypisz(f"Postacie: {', '.join(rooms[currentRoom]['characters'])}", slowo_bold=rooms[currentRoom]["characters"], slowo_kolor={char: "YELLOW" for char in rooms[currentRoom]["characters"]})
         wypisz(f"Dostępne kierunki: {', '.join(avaiable_directions)}", slowo_bold=avaiable_directions, slowo_kolor={dir: 'GREEN' for dir in avaiable_directions})
+        pokaz_minimape(currentRoom, rooms, visited_rooms)
         turn = input("> ").strip()
         while turn=="":
             turn = input()
@@ -114,13 +75,47 @@ def main(player):
                 stolyust,
                 podlogac,
             )
+        #elif komenda == "go":
+        #    if not argument:
+        #        wypisz("Nieznany kierunek.", kolor="RED")
+        #    elif argument in rooms[currentRoom]:
+        #        currentRoom = rooms[currentRoom][argument]
+        #    else:
+        #        wypisz("Nie możesz iść w tym kierunku.", kolor="RED")
         elif komenda == "go":
             if not argument:
                 wypisz("Nieznany kierunek.", kolor="RED")
-            elif argument in rooms[currentRoom]:
-                currentRoom = rooms[currentRoom][argument]
             else:
-                wypisz("Nie możesz iść w tym kierunku.", kolor="RED")
+                # Zamieniamy argument gracza na małe litery, żeby "Hol", "hol" i "HOL" działały tak samo
+                argument = argument.lower()
+
+                # ETAP 1: Czy gracz wpisał skrót? (np. "e" zamieniamy na "east")
+                if argument in skroty_kierunkow:
+                    argument = skroty_kierunkow[argument]
+
+                # ETAP 2: Czy gracz wpisał poprawny kierunek? (np. "east")
+                # Sprawdzamy czy wpisane słowo to kierunek i czy ten kierunek jest dostępny w obecnym pokoju
+                if argument in directions and argument in rooms[currentRoom]:
+                    currentRoom = rooms[currentRoom][argument]
+                    visited_rooms.add(currentRoom)
+                # ETAP 3: Czy gracz wpisał nazwę pokoju? (np. "hol")
+                else:
+                    znaleziono_cel = False
+                    # Przeszukujemy wszystkie dostępne kierunki w obecnym pokoju
+                    for kierunek in directions:
+                        if kierunek in rooms[currentRoom]:
+                            nazwa_pokoju = rooms[currentRoom][kierunek]
+
+                            # Sprawdzamy czy nazwa pokoju z małych liter pasuje do wpisanego argumentu
+                            if nazwa_pokoju.lower() == argument:
+                                currentRoom = nazwa_pokoju
+                                znaleziono_cel = True
+                                visited_rooms.add(currentRoom)
+                                break # Znaleźliśmy pokój, przerywamy pętlę
+                            
+                    # Jeśli pętla się skończyła i nic nie znaleźliśmy
+                    if not znaleziono_cel:
+                        wypisz("Nie możesz iść w tym kierunku ani do tego miejsca.", kolor="RED")
         elif komenda == "get":
             handle_get(player, currentRoom, rooms, argument)
         elif komenda == "talk":
@@ -146,3 +141,49 @@ def main(player):
             wypisz(rooms[currentRoom]["description"])
         else:
             wypisz("Nieznana komenda. Wpisz 'help' aby uzyskać listę dostępnych komend.", kolor="RED", slowo_kolor={"help": "CYAN"})
+        for quest_key, quest_data in quests.items():
+            if not isinstance(quest_data, dict):
+                continue
+            if quest_data.get("active") and quest_data.get("completed"):
+                exp_reward = int(quest_data.get("exp", 0))
+                item_reward = quest_data.get("items", "")
+                gold_reward=quest_data.get("gold",0)
+                player.exp += exp_reward
+                if gold_reward:
+                    player.gold += gold_reward
+                    if item_reward:
+                        wypisz(f"Zadanie '{quest_data.get('name', quest_key)}' zostało ukończone! Otrzymujesz {exp_reward} doświadczenia, {gold_reward} złota oraz {item_reward}!", kolor="GREEN")
+                        player.inventory.append(item_reward)
+                    else:
+                        wypisz(f"Zadanie '{quest_data.get('name', quest_key)}' zostało ukończone! Otrzymujesz {exp_reward} doświadczenia i {gold_reward} złota!", kolor="GREEN")
+                else:
+                    if item_reward:
+                        wypisz(f"Zadanie '{quest_data.get('name', quest_key)}' zostało ukończone! Otrzymujesz {exp_reward} doświadczenia oraz {item_reward}!", kolor="GREEN")
+                        player.inventory.append(item_reward)
+                    else:
+                        wypisz(f"Zadanie '{quest_data.get('name', quest_key)}' zostało ukończone! Otrzymujesz {exp_reward} doświadczenia", kolor="GREEN")
+
+                quest_data["active"] = False
+        if player.exp >= player.expto_next_level:
+            player.level += 1
+            player.exp -= player.expto_next_level
+            player.expto_next_level = int(player.expto_next_level * 1.5)
+            player.max_hp += 20
+            
+            wypisz(f"Gratulacje! Awansowałeś na poziom {player.level}! Wybierz statystyke do ulepszenia:", kolor="GREEN")
+            wypisz("1. Siła", slowo_bold="1.")
+            wypisz("2. Zręczność", slowo_bold="2.")
+            wypisz("3. Inteligencja", slowo_bold="3.")
+            choice = input("> ").strip()
+            if choice == "1":
+                player.strength += 5
+                player.max_hp += 10
+            elif choice == "2":
+                player.dexterity += 5
+            elif choice == "3":
+                player.intelligence += 5
+                player.max_energy += 10
+            player.energy = player.max_energy
+            player.hp = player.max_hp
+
+

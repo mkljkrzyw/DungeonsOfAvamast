@@ -28,9 +28,26 @@ def handle_use(player, currentRoom, rooms, quests, argument, palisie, tob1, stol
                 wypisz("1. Tak\n2. Nie", slowo_kolor={"1. Tak": "GREEN", "2. NIE": "RED"})
                 choice = input(">")
                 os.system("cls")
+                if choice == "2":
+                    wypisz("Może innym razem")
+                    continue
+                elif choice == "1":
+                    if player.gold >= 5:
+                        wypisz("Kładziesz się w wynajętym pokoju i odpoczywasz")
+                        player.gold -= 5
+                        player.hp = player.max_hp
+                        player.energy = player.max_energy
+                    else:
+                        wypisz("Nie masz wystarczająco dużo złota, żeby wynająć pokój.")
+        elif argument == "łozko" and quests["Kominek"]["completed"]:
+            wypisz("Czy chcesz się położyć i odpocząć?")
+            choice = ""
+            while choice not in ["1", "2"]:
+                wypisz("1. Tak\n2. Nie", slowo_kolor={"1. Tak": "GREEN", "2. NIE": "RED"})
+                choice = input(">")
+                os.system("cls")
                 if choice == "1":
-                    wypisz("Kładziesz się w wynajętym pokoju i odpoczywasz")
-                    player.gold -= 5
+                    wypisz("Kładziesz się w na swoim materacu i regenerujesz siły")
                     player.hp = player.max_hp
                     player.energy = player.max_energy
                 elif choice == "2":

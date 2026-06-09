@@ -26,7 +26,8 @@ def handle_talk(player, currentRoom, rooms, quests, argument, tob_location, tob1
                 if "Ketan" not in rooms["dwor"]["characters"]:
                     rooms["dwor"]["characters"].append("Ketan")
             elif quests["Jadalnia"]["completed"]:
-                wypisz("Tob: Świetna robota, przy okazji masz klucz do skrzyni w zbrojowni. Zapomniałem go odłożyć na miejsce. Wybierz sobie coś co ci odpowiada i wróć tutaj", kolor="LIGHT_CYAN", slowo_bold="Tob")
+                wypisz("Tob: Świetna robota, przy okazji chodź za mną, to otworzę ci skrzynię w zbrojowni. Kompletnie mi to wyleciało z głowy przez ten natłok pracy", kolor="LIGHT_CYAN", slowo_bold="Tob")
+                currentRoom = "Zbrojownia"
             elif quests["Jadalnia"]["active"]:
                 wypisz("Tob: Miałeś posprzątać jadalnię. Nie zawracaj mi głowy, dopóki tego nie zrobisz.", kolor="LIGHT_CYAN", slowo_bold="Tob")
             else:

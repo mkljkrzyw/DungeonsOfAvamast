@@ -1,4 +1,12 @@
 directions=["north", "south", "east", "west", "enter", "exit"]
+skroty_kierunkow = {
+    "n": "north",
+    "s": "south",
+    "e": "east",
+    "w": "west",
+    "en": "enter",
+    "ex": "exit"
+}
 avaiable_directions = []
 rooms = {
 "Sala Sypialniana": {
@@ -114,3 +122,60 @@ for x in range(-3, 4):
         if y > -3: rooms[room_id]["south"] = f"({x},{y-1})"
         if x < 3: rooms[room_id]["east"] = f"({x+1},{y})"
         if x > -3: rooms[room_id]["west"] = f"({x-1},{y})"
+
+def pokaz_minimape(obecny_pokoj, slownik_pokoi, odwiedzone):
+    if obecny_pokoj.startswith("("):
+        return
+    def sprawdz_kierunek(kierunek):
+        if kierunek in slownik_pokoi[obecny_pokoj]:
+            cel = slownik_pokoi[obecny_pokoj][kierunek]
+            if cel.startswith("("):
+                return ""
+            if cel in odwiedzone:
+                return f"[{cel}]"
+            else:
+                return "[?]"
+        return ""
+
+    polnoc = sprawdz_kierunek("north")
+    poludnie = sprawdz_kierunek("south")
+    wschod = sprawdz_kierunek("east")
+    zachod = sprawdz_kierunek("west")
+    
+    srodek_mapy = f"[* {obecny_pokoj} *]"
+
+    # Ustawiamy stałe szerokości kolumn (siatka)
+    L = 22  # szerokość lewej strony
+    C = 28  # szerokość środka (Obecny pokój + pionowe linie)
+    R = 22  # szerokość prawej strony
+    
+    # Całkowita szerokość mapy do wyśrodkowania tytułów
+    szerokosc_mapy = L + 3 + C + 3 + R  
+
+    # Tytuł ładnie wyśrodkowany
+    print("\n" + "------------------------------ MAPA LOKALNA ------------------------------\n".center(szerokosc_mapy))
+    
+    # Rysujemy Północ
+    if polnoc:
+        print(" " * L + "   " + polnoc.center(C))
+        print(" " * L + "   " + "|".center(C))
+        
+    # Sklejamy linię środkową wyrównując elementy do odpowiednich krawędzi
+    # Zachód dociskamy do prawej (.rjust), Wschód dociskamy do lewej (.ljust), Środek centrujemy (.center)
+    lewa_czesc = zachod.rjust(L) + (" - " if zachod else "   ")
+    srodek = srodek_mapy.center(C)
+    prawa_czesc = (" - " if wschod else "   ") + wschod.ljust(R)
+    
+    print(lewa_czesc + srodek + prawa_czesc)
+    
+    # Rysujemy Południe
+    if poludnie:
+        print(" " * L + "   " + "|".center(C))
+        print(" " * L + "   " + poludnie.center(C))
+        
+    # Informacja o wyjściu
+    if "exit" in slownik_pokoi[obecny_pokoj]:
+        print("\n" + "* Dostępne wyjście w nieznane: 'exit' *".center(szerokosc_mapy))
+        
+    # Kreska zamykająca mapę
+    print("-" * (szerokosc_mapy-3) + "\n")
