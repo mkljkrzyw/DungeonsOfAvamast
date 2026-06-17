@@ -205,7 +205,7 @@ def uzyj_mape(obecny_pokoj):
             print("Nie możesz tutaj użyć mapy.")
             return
 
-    print("\n" + "=== ROZWIJASZ MAPĘ ŚWIATA ===".center(105))
+    print("\n" + "=================================== ROZWIJASZ MAPĘ ŚWIATA ===================================".center(105))
     print()
 
     # Rysujemy macierz 7x7 (Y od 3 do -3; X od -3 do 3)
