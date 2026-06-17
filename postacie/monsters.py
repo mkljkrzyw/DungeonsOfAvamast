@@ -42,3 +42,15 @@ class dopler:
     currentdefense=defense
     exp=30
     gold=20
+class bandyta:
+    name="Bandyta"
+    hp=80
+    max_hp=80
+    strength = 15
+    dexterity = 10
+    intelligence = 5
+    damage = 15
+    defense = 10
+    currentdefense=defense
+    exp=50
+    gold=50

@@ -1,4 +1,5 @@
 import os
+from walki.encounters import encounter_check
 from interfejs.ui import wypisz, help, sformatuj_ekwipunek
 from lokacje.lokacjewiz import *
 from lokacje.mapa import *
@@ -116,6 +117,7 @@ def main(player):
                     # Jeśli pętla się skończyła i nic nie znaleźliśmy
                     if not znaleziono_cel:
                         wypisz("Nie możesz iść w tym kierunku ani do tego miejsca.", kolor="RED")
+            encounter_check(player, currentRoom)
         elif komenda == "get":
             handle_get(player, currentRoom, rooms, argument)
         elif komenda == "talk":
