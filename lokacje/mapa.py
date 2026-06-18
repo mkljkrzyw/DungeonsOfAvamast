@@ -67,7 +67,7 @@ rooms = {
 "Karczma": {
     "description": "Jesteś w karczmie. Widzisz kilka stolików, bar, oraz drzwi prowadzące do bramy miasteczka",
     "objects": ["alkierz"],
-    "characters":["dany"],
+    "characters":["Darn"],
     "north": "Brama Miasteczka"
 },
 "Targ": {
@@ -129,11 +129,15 @@ punkty_kluczowe = {
     "(2,-1)": "Tartak",
 }
 strefa_potworow = {
-    "(-3,2)","(-3,1)","(-3,0)","(-3,-1)","(-3,-2)","(-3,-3)","(-2,3)","(-2,2)","(-2,1)","(-2,0)","(-2,-1)","(-2,-2)","(-2,-3)","(-1,-2),(-1,-3)","(0,-2)","(1,-2)","(1,-3)"
+    "(-3,2)","(-3,1)","(-3,0)","(-3,-1)","(-3,-2)","(-3,-3)","(-2,3)","(-2,2)","(-2,1)","(-2,0)","(-2,-1)","(-2,-2)","(-2,-3)","(-1,-2)","(-1,-3)","(0,-2)","(1,-2)","(1,-3)"
 }
 strefa_bandytow = {
     "(-1,3)","(0,3)","(2,3)","(3,3)","(3,2)","(3,1)","(3,0)","(3,-1)","(0,2)","(1,2)","(2,1)","(2,0)"
 }
+for i in strefa_potworow:
+    rooms[i]["description"] = f"Przemierzasz zaśnieżone pustkowia. Pogoda wokół ciebie jest coraz mroczniejsza. Wyczuwasz obecność burzy niedaleko Ciebie. Czujesz, że na tym terenie mogą czaić się potwory."
+for i in strefa_bandytow:
+    rooms[i]["description"] = f"Przemierzasz zaśnieżone pustkowia. Widać nieliczne ślady stóp. Czujesz, że powinieneś zachować ostrożność."
 # Tłumaczenie lokacji wewnętrznych na pozycję na świecie
 pozycja_na_swiecie = {
     "Sala Sypialniana": (0,0), "Hol": (0,0), "Biblioteka": (0,0), 

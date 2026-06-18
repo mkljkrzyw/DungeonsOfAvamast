@@ -7,7 +7,7 @@ from walki.fights import *
 def encounter_check(player, current_room):
     if not current_room.startswith("("):
         return
-    chance = 1
+    chance = 0.2
     if current_room in strefa_potworow:
         if random.random() < chance:
             print("Spotykasz potwora!")

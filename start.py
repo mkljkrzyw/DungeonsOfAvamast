@@ -53,16 +53,16 @@ def start():
     if input("> ").strip().lower() == "tak":
         print("Samouczek? (tak/nie)")
         if input("> ").strip().lower() == "tak":
-            player = Player("Testowy Bohater", 10, 10, 10, "Manipulacja krwią")
+            player = Player("Testowy Bohater", 30, 30, 30, "Manipulacja krwią")
             tutorial(player)
             return
         else:
             print("Walka? (tak/nie)")
             if input("> ").strip().lower() == "tak":
-                player = Player("Testowy Bohater", 10, 10, 10, "Manipulacja krwią")
+                player = Player("Testowy Bohater", 30, 30, 30, "Manipulacja krwią")
                 walka(player, test)
             else:
-                player = Player("Testowy Bohater", 10, 10, 10, "Manipulacja krwią")
+                player = Player("Testowy Bohater", 30, 30, 30, "Manipulacja krwią")
                 main(player)
     wyczysc_ekran()
     uruchom_gre()

@@ -1,5 +1,6 @@
 import os
 
+from DungeonsOfAvamast.walki.fights import walka
 from interfejs.ui import wypisz
 
 
@@ -52,7 +53,7 @@ def handle_talk(player, currentRoom, rooms, quests, argument, tob_location, tob1
                             wypisz("1. Tak, jednak Ci pomogę \n2. Nie", slowo_bold="1.;2.", slowo_kolor={"1.": "GREEN", "2.": "RED"})
                             choice = input("> ").strip()
                             if choice == "1":
-                                wypisz("Kowal: Bardzo dobrze, nwcoswymyslexd", kolor="LIGHT_CYAN", slowo_bold="Kowal")
+                                wypisz("Kowal: Bardzo dobrze. Słuchaj jeżeli chcesz zmniejszyć koszt to będziesz musiał ubrudzić sobie troche ręce. Pożyczyłem moje wyroby pewnemu jegomościowi. Od tamtej chwili nie widziałem go w wiosce. Jego ojciec - Darn to lokalny pijak i pewnie siedzi teraz w karczmie. Wyciągnij z niego informacje, gdzie jest jego syn, a potem przemów mu do rozsądku. Nie interesuje mnie co zrobisz. Masz mi przynieść towary które sobie przywłaszczył", kolor="LIGHT_CYAN", slowo_bold="Kowal")
                                 quests["Kowal"]["active"] = True
                             elif choice == "2":
                                 wypisz("Kowal: No cóż, to Twoja strata. Wracaj jak uzbierasz 500 złota, no chyba że zmienisz zdanie", kolor="LIGHT_CYAN", slowo_bold="Kowal")
@@ -65,11 +66,44 @@ def handle_talk(player, currentRoom, rooms, quests, argument, tob_location, tob1
                     wypisz("1. Pomogę Ci \n2. Nie mam czasu", slowo_bold="1.;2.", slowo_kolor={"1.": "GREEN", "2.": "RED"})
                     choice = input("> ").strip()
                     if choice == "1":
-                        wypisz("Kowal: Bardzo dobrze, nwcoswymyslexd", kolor="LIGHT_CYAN", slowo_bold="Kowal")
+                        wypisz("Kowal: Bardzo dobrze.  Słuchaj jeżeli chcesz zmniejszyć koszt to będziesz musiał ubrudzić sobie troche ręce. Pożyczyłem moje wyroby pewnemu jegomościowi. Od tamtej chwili nie widziałem go w wiosce. Jego ojciec - Darn to lokalny pijak i pewnie siedzi teraz w karczmie. Wyciągnij z niego informacje, gdzie jest jego syn, a potem przemów mu do rozsądku. Nie interesuje mnie co zrobisz. Masz mi przynieść towary które sobie przywłaszczył", kolor="LIGHT_CYAN", slowo_bold="Kowal")
                         quests["Kowal"]["active"] = True
                     elif choice == "2":
                         wypisz("Kowal: No cóż, to Twoja strata. Wracaj jak uzbierasz 500 złota, no chyba że zmienisz zdanie", kolor="LIGHT_CYAN", slowo_bold="Kowal")
             kowal1 = True
+        elif argument == "darn" and currentRoom == "Karczma":
+            if quests["Kowal"]["active"] and not quests["Kowal"]["completed"]:
+                wypisz("Darn: Czego")
+                choice = ""
+                while choice not in ["1", "2"]:
+                    os.system("cls")
+                    wypisz("1. Hej Darn, słyszałem że twój syn zaginął. Wiesz może gdzie on jest?", slowo_bold="1.", slowo_kolor={"1.": "GREEN"})
+                    wypisz("2. Darn, gdzie twój syn? Wisi kase kowalowi", slowo_bold="2.", slowo_kolor={"2.": "GREEN"})
+                    choice = input("> ").strip()
+                    if choice == "1":
+                        wypisz("Darn: A co cie to?", kolor="LIGHT_CYAN", slowo_bold="Darn")
+                        choice2 = ""
+                        while choice2 not in ["1", "2"]:
+                            wypisz("1. Słuchaj, nie chcę robić problemów, ale jeżeli wiesz gdzie jest twój syn to powiedz mi, mam do niego ważną sprawę. \n2. Słuchaj, nie mam czasu na pierdolenie się z tobą. Powiedz mi gdzie jest twój syn albo będziesz miał ze mną problem", slowo_bold="1.;2.", slowo_kolor={"1.": "GREEN", "2.": "GREEN"})
+                            choice2 = input("> ").strip()
+                            if choice2 == "1":
+                                wypisz("Darn: No dobra, ale nie wiem gdzie on jest. Ostatnio widziałem go w karczmie, ale to było kilka dni temu. Od tamtej pory nie mam z nim żadnego kontaktu. Słyszałem że kręci się poza murami niedaleko tartaku, ale nie wiem gdzie dokładnie", kolor="LIGHT_CYAN", slowo_bold="Darn")
+                            elif choice2 == "2":
+                                    wypisz("Darn: Słuchaj, nie wiem gdzie jest mój syn, ale jeżeli chcesz się ze mną pieprzyć to możemy to zrobić. Nie mam nic do stracenia", kolor="LIGHT_CYAN", slowo_bold="Darn")
+                                    #walka(player, darn)
+                    elif choice == "2":
+                        wypisz("Darn: Nie twoja sprawa", kolor="LIGHT_CYAN", slowo_bold="Darn")
+                        choice2 = ""
+                        while choice2 not in ["1", "2"]:
+                            wypisz("1. Gadaj gdzie on jest, bo będziesz miał ze mną problem \n2. Spokojnie, na pewno sobie z nim porozmawiam i wszystko będzie w porządku", slowo_bold="1.;2.", slowo_kolor={"1.": "GREEN", "2.": "GREEN"})
+                            choice2 = input("> ").strip()
+                            if choice2 == "1":
+                                wypisz("Darn: Spierdalaj", kolor="LIGHT_CYAN", slowo_bold="Darn")
+                                wypisz("Sam spierdalaj")
+                                #walka(player, darn)
+                            elif choice2 == "2":
+                                wypisz("Darn: No dobra, ale nie wiem gdzie on jest. Ostatnio widziałem go w karczmie, ale to było kilka dni temu. Od tamtej pory nie mam z nim żadnego kontaktu. Słyszałem że kręci się poza murami niedaleko tartaku, ale nie wiem gdzie dokładnie", kolor="LIGHT_CYAN", slowo_bold="Darn")
+                wypisz("Darn: Spierdalaj")
         elif argument == "smutna kobieta" and currentRoom == "Targ":
             wypisz("Smutna kobieta: Witaj. Jeżeli przyszedłeś tu po drewno to muszę Cię zasmucić. Zamykamy biznes. Mój mąź zaginął, a to on dostarczał mi drewno. Nie mam z nim żadnego kontaktu od tygodnia. Nikt nie chce mi pomóc, sprawdzić co się stało, a nie mogę pójść sama ponieważ w pobliżu krążą bandyci. Proszę pójdź ze mną do naszego tartaku, który znajduje się na południe od miasta", kolor="LIGHT_CYAN", slowo_bold="Smutna kobieta")
             quests["Drwal"]["active"] = True

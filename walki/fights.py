@@ -10,9 +10,14 @@ turapotwora=""
 czy_crit=False
 licznik=0
 def walka(player, przeciwnik):
+    if isinstance(przeciwnik, type):
+        przeciwnik = przeciwnik()
+
     turagracz = ""
     turapotwora = ""
     czy_crit = False
+    player.currentdefense = player.defense
+    przeciwnik.currentdefense = przeciwnik.defense
     wypisz(f"Rozpoczynasz walkę z {przeciwnik.name}!")
     if player.dexterity > przeciwnik.dexterity:
         atakujacy = player
@@ -195,7 +200,11 @@ def walka(player, przeciwnik):
     else:        
         print("Wygrałeś walkę!")
         player.exp += przeciwnik.exp
+        player.gold += getattr(przeciwnik, "gold", 0)
         wypisz(f"Otrzymujesz {przeciwnik.exp} doświadczenia!", slowo_kolor={f"{przeciwnik.exp} doświadczenia!": "GREEN"})
+        if getattr(przeciwnik, "gold", 0):
+            wypisz(f"Otrzymujesz {przeciwnik.gold} złota!", slowo_kolor={f"{przeciwnik.gold} złota!": "YELLOW"})
+        player.currentdefense = player.defense
         wypisz("Naciśnij Enter, aby kontynuować...")
         input()
         

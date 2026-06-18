@@ -1,3 +1,4 @@
+import random
 class rapax:
     name = "Rapax"
     hp = 800
@@ -44,13 +45,13 @@ class dopler:
     gold=20
 class bandyta:
     name="Bandyta"
-    hp=80
-    max_hp=80
-    strength = 15
-    dexterity = 10
+    max_hp=random.randint(75, 85)
+    hp=random.randint(max_hp-10, max_hp)
+    strength = random.randint(8, 12)
+    dexterity = random.randint(8, 12)
     intelligence = 5
-    damage = 15
+    damage = random.randint(strength, strength+3)
     defense = 10
     currentdefense=defense
-    exp=50
-    gold=50
+    exp=random.randint(10, 30)
+    gold=random.randint(0, 25)
