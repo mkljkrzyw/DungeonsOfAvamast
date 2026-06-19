@@ -3,6 +3,7 @@ import os
 from DungeonsOfAvamast.walki.fights import walka
 from interfejs.ui import wypisz
 
+kowalq = False
 
 def handle_talk(player, currentRoom, rooms, quests, argument, tob_location, tob1, tob2, kowal1):
     if not argument:
@@ -41,6 +42,13 @@ def handle_talk(player, currentRoom, rooms, quests, argument, tob_location, tob1
                 elif not quests["Kowal"]["active"]:
                     if not quests["Zbrojownia"]["active"]:
                         print("Xd")
+                    elif kowalq:
+                        if player.gold >= 300:
+                            wypisz("Całkiem szybko Ci poszło. O to twoje zamówienie")
+                            player.gold -= 300
+                            player.inventory.append("zamowienie")
+                        else:
+                            wypisz("Kowal: Wróć jak zbierzesz kase")
                     elif player.gold >= 500:
                         wypisz("Całkiem szybko Ci poszło. O to twoje zamówienie")
                         player.gold -= 500
@@ -53,6 +61,7 @@ def handle_talk(player, currentRoom, rooms, quests, argument, tob_location, tob1
                             wypisz("1. Tak, jednak Ci pomogę \n2. Nie", slowo_bold="1.;2.", slowo_kolor={"1.": "GREEN", "2.": "RED"})
                             choice = input("> ").strip()
                             if choice == "1":
+                                kowalq = True
                                 wypisz("Kowal: Bardzo dobrze. Słuchaj jeżeli chcesz zmniejszyć koszt to będziesz musiał ubrudzić sobie troche ręce. Pożyczyłem moje wyroby pewnemu jegomościowi. Od tamtej chwili nie widziałem go w wiosce. Jego ojciec - Darn to lokalny pijak i pewnie siedzi teraz w karczmie. Wyciągnij z niego informacje, gdzie jest jego syn, a potem przemów mu do rozsądku. Nie interesuje mnie co zrobisz. Masz mi przynieść towary które sobie przywłaszczył", kolor="LIGHT_CYAN", slowo_bold="Kowal")
                                 quests["Kowal"]["active"] = True
                             elif choice == "2":
@@ -66,6 +75,7 @@ def handle_talk(player, currentRoom, rooms, quests, argument, tob_location, tob1
                     wypisz("1. Pomogę Ci \n2. Nie mam czasu", slowo_bold="1.;2.", slowo_kolor={"1.": "GREEN", "2.": "RED"})
                     choice = input("> ").strip()
                     if choice == "1":
+                        kowalq = True
                         wypisz("Kowal: Bardzo dobrze.  Słuchaj jeżeli chcesz zmniejszyć koszt to będziesz musiał ubrudzić sobie troche ręce. Pożyczyłem moje wyroby pewnemu jegomościowi. Od tamtej chwili nie widziałem go w wiosce. Jego ojciec - Darn to lokalny pijak i pewnie siedzi teraz w karczmie. Wyciągnij z niego informacje, gdzie jest jego syn, a potem przemów mu do rozsądku. Nie interesuje mnie co zrobisz. Masz mi przynieść towary które sobie przywłaszczył", kolor="LIGHT_CYAN", slowo_bold="Kowal")
                         quests["Kowal"]["active"] = True
                     elif choice == "2":
