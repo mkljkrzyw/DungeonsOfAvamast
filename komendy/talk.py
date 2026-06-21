@@ -1,7 +1,8 @@
 import os
 
-from DungeonsOfAvamast.walki.fights import walka
+from walki.fights import walka
 from interfejs.ui import wypisz
+from postacie.monsters import *
 
 kowalq = False
 
@@ -98,9 +99,10 @@ def handle_talk(player, currentRoom, rooms, quests, argument, tob_location, tob1
                             choice2 = input("> ").strip()
                             if choice2 == "1":
                                 wypisz("Darn: No dobra, ale nie wiem gdzie on jest. Ostatnio widziałem go w karczmie, ale to było kilka dni temu. Od tamtej pory nie mam z nim żadnego kontaktu. Słyszałem że kręci się poza murami niedaleko tartaku, ale nie wiem gdzie dokładnie", kolor="LIGHT_CYAN", slowo_bold="Darn")
+                                rooms["(2,-1)"]["characters"].append("Omerio")
                             elif choice2 == "2":
                                     wypisz("Darn: Słuchaj, nie wiem gdzie jest mój syn, ale jeżeli chcesz się ze mną pieprzyć to możemy to zrobić. Nie mam nic do stracenia", kolor="LIGHT_CYAN", slowo_bold="Darn")
-                                    #walka(player, darn)
+                                    walka(player, darn)
                     elif choice == "2":
                         wypisz("Darn: Nie twoja sprawa", kolor="LIGHT_CYAN", slowo_bold="Darn")
                         choice2 = ""
@@ -110,10 +112,35 @@ def handle_talk(player, currentRoom, rooms, quests, argument, tob_location, tob1
                             if choice2 == "1":
                                 wypisz("Darn: Spierdalaj", kolor="LIGHT_CYAN", slowo_bold="Darn")
                                 wypisz("Sam spierdalaj")
-                                #walka(player, darn)
+                                walka(player, darn)
                             elif choice2 == "2":
                                 wypisz("Darn: No dobra, ale nie wiem gdzie on jest. Ostatnio widziałem go w karczmie, ale to było kilka dni temu. Od tamtej pory nie mam z nim żadnego kontaktu. Słyszałem że kręci się poza murami niedaleko tartaku, ale nie wiem gdzie dokładnie", kolor="LIGHT_CYAN", slowo_bold="Darn")
+                                rooms["(2,-1)"]["characters"].append("Omerio")
                 wypisz("Darn: Spierdalaj")
+        elif argument == "omerio" and currentRoom == "(2,-1)":
+            wypisz("Omerio: Zgubiłeś się?")
+            while choice not in ["1", "2"]:
+                os.system("cls")
+                choice = ""
+                wypisz("1. Tak, szukam drewna do tartaku \n2. Nie, szukam Ciebie", slowo_bold="1.;2.", slowo_kolor={"1.": "GREEN", "2.": "GREEN"})
+                choice = input("> ").strip()
+                if choice == "1":
+                    wypisz("Omerio: To szukaj dalej, jak zaraz stąd nie pójdziesz będziesz mieć kłopoty", kolor="LIGHT_CYAN", slowo_bold="Omerio")
+                    wypisz("1. Zaatakuj z zaskoczenia \n 2. Nie boje się, Ciebie. Okradłeś kowala")
+                    choice2 = ""
+                    while choice2 not in ["1", "2"]:
+                        os.system("cls")
+                        choice2 = input("> ").strip()
+                        if choice2 == "1":
+                            wypisz("Omerio: Co do chuja?!", kolor="LIGHT_CYAN", slowo_bold="Omerio")
+                            wypisz("Atakujesz Omerio z zaskoczenia, zadajesz 20 obrażeń")
+                            walka(player, omerio)
+                        elif choice2 == "2":
+                            wypisz("Omerio: Jesteś martwy", kolor="LIGHT_CYAN", slowo_bold="Omerio")
+                            walka(player, omerio)
+                elif choice == "2":
+                    wypisz("Omerio: To znalazłeś", kolor="LIGHT_CYAN", slowo_bold="Omerio")
+                    walka(player, omerio)
         elif argument == "smutna kobieta" and currentRoom == "Targ":
             wypisz("Smutna kobieta: Witaj. Jeżeli przyszedłeś tu po drewno to muszę Cię zasmucić. Zamykamy biznes. Mój mąź zaginął, a to on dostarczał mi drewno. Nie mam z nim żadnego kontaktu od tygodnia. Nikt nie chce mi pomóc, sprawdzić co się stało, a nie mogę pójść sama ponieważ w pobliżu krążą bandyci. Proszę pójdź ze mną do naszego tartaku, który znajduje się na południe od miasta", kolor="LIGHT_CYAN", slowo_bold="Smutna kobieta")
             quests["Drwal"]["active"] = True

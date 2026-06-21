@@ -55,3 +55,25 @@ class bandyta:
     currentdefense=defense
     exp=random.randint(10, 30)
     gold=random.randint(0, 25)
+class omerio:
+    name="Omerio"
+    hp=150
+    max_hp=150
+    strength = 15
+    dexterity = 15
+    intelligence = 15
+    damage = 20
+    defense = 10
+    currentdefense=defense
+    exp=70
+class darn:
+    name="Darn"
+    hp=100
+    max_hp=100
+    strength = 10
+    dexterity = 10
+    intelligence = 10
+    damage = 15
+    defense = 10
+    currentdefense=defense
+    exp=30

@@ -1,5 +1,6 @@
 import os
 import random
+from zadania import quests
 from przedmioty import blogoslawienstwa
 from przedmioty.blogoslawienstwa import krew, oczy, ciezar
 from interfejs.ui import wypisz, bestiariusz, opisz_przedmiot
@@ -194,6 +195,12 @@ def walka(player, przeciwnik):
         print("Zostałeś pokonany!")
         if przeciwnik.name=="Rapax":
             return
+        elif przeciwnik.name=="Omerio":
+            wypisz("Omerio: Widzisz, nie powinieneś był mnie atakować. Teraz musisz umrzeć", slowo_kolor={"Omerio: Widzisz, nie powinieneś był mnie atakować. Teraz musisz umrzeć": "RED"})
+            exit()
+        elif przeciwnik.name=="Darn":
+            wypisz("Darn: Widzisz, nie powinieneś był mnie atakować. Teraz musisz umrzeć", slowo_kolor={"Darn: Widzisz, nie powinieneś był mnie atakować. Teraz musisz umrzeć": "RED"})
+            exit()
         else:
             exit()
         
@@ -205,6 +212,13 @@ def walka(player, przeciwnik):
         if getattr(przeciwnik, "gold", 0):
             wypisz(f"Otrzymujesz {przeciwnik.gold} złota!", slowo_kolor={f"{przeciwnik.gold} złota!": "YELLOW"})
         player.currentdefense = player.defense
+        if przeciwnik.name == "Darn":
+            wypisz("Darn: Dobrze, już dobrze. Mój syn jest przy tartaku")
+        elif przeciwnik.name == "Omerio":
+            wypisz("Omerio: Masz ten sprzęt i spierdalaj", slowo_kolor={"Omerio: Widzisz, nie powinieneś był mnie atakować. Teraz musisz umrzeć": "RED"})
+            quests["Kowal"]["completed"] = True
+
+            
         wypisz("Naciśnij Enter, aby kontynuować...")
         input()
         
